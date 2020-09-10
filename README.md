@@ -12,12 +12,14 @@ GCC
 
 ## Instruções de uso do programa
 
-- Digite um número, dentre as opções apresentadas(1, 2, 3, 4 ou 5), para escolher entre:
-  1. Inserir um site
-  2. Remover um site;
-  3. Inserir palavra-chave
-  4. Atualizar relevância
-  5. Sair  
+- Digite um número, dentre as opções apresentadas (1, 2, 3, 4 ou 5), para escolher entre:
+
+1. Inserir um site;
+2. Remover um site;
+3. Inserir palavra-chave;
+4. Atualizar relevância;
+5. Sair.
+
 - Digite os dados do site conforme o que for pedido na programa.
 
 ## Justificativas para as escolhas das estruturas
