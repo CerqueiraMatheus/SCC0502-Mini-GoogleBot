@@ -4,7 +4,7 @@
 #define INPUT_BUFFER 2048
 
 // Retorna uma linha a partir de um arquivo.
-char *getLineFromFile(FILE *inputFile) {
+char *readLine(FILE *inputFile) {
     char *line = NULL;
     int pos = 0;
 
