@@ -29,10 +29,10 @@ int main() {
     printf("3. Inserir palavra-chave\n");
     printf("4. Atualizar relevância\n");
     printf("5. Sair\n");
-    printf("Digite sua escolha:\n");
-    scanf("%d", &escolha);
 
     while (escolha != 5) {
+        printf("Digite sua escolha:\n");
+        scanf("%d", &escolha);
         switch (escolha) {
             case 1:
                 //pegar informações
@@ -54,8 +54,6 @@ int main() {
             default:
                 printf("ERRO\n");
         }
-        printf("Digite sua escolha:\n");
-        scanf("%d", &escolha);
     }
 
     return 0;
