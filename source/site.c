@@ -44,7 +44,9 @@ void atualizar_relevancia(SITE **site, int nova_relevancia) {
 
 SITE **readFile(FILE *inputFile) {
     printf("Estou na readFile\n");
+
     int pos = 0;
+
     SITE **txt = malloc(sizeof(SITE **) * (pos + 1));
     txt[pos] = malloc(sizeof(SITE *));
     txt[pos]->palavras_chave = malloc(sizeof(char *) * 10);
@@ -58,39 +60,54 @@ SITE **readFile(FILE *inputFile) {
         pch = strtok(insertionString, ",");
 
         do {
+            // Caso não seja um número
             if ((i != 0) && (i != 2)) {
                 strncpy(auxName, pch - 1, strlen(pch) + 1);
                 auxName[strlen(pch) + 1] = '\0';
-                if (i == 1) {
+            }
+
+            switch (i) {
+                // Caso 0: código
+                case 0:
+                    txt[pos]->codigo = atoi(pch);
+                    printf("\ni = %d pos = %d codigo = %d\n", i, pos, txt[pos]->codigo);
+
+                    break;
+
+                // Caso 1: nome
+                case 1:
                     txt[pos]->nome = malloc(sizeof(char) * strlen(auxName));
                     strcpy(txt[pos]->nome, auxName);
                     printf("i = %d pos = %d nome = %s\n", i, pos, txt[pos]->nome);
-                }
-                if (i == 3) {
+
+                    break;
+
+                // Caso 2: relevância
+                case 2:
+                    txt[pos]->relevancia = atoi(pch - 1);
+                    printf("i = %d pos = %d relevancia = %d\n", i, pos, txt[pos]->relevancia);
+                    break;
+
+                // Caso 3: link
+                case 3:
                     txt[pos]->link = malloc(sizeof(char) * strlen(auxName));
                     strcpy(txt[pos]->link, auxName);
                     printf("i = %d pos = %d link = %s\n", i, pos, txt[pos]->link);
-                }
-                if (i >= 4) {
+
+                    break;
+
+                // Caso "padrão": palavras-chave
+                default:
                     txt[pos]->palavras_chave = malloc(sizeof(char *) * 10);
                     txt[pos]->palavras_chave[i - 4] = malloc(sizeof(char) * strlen(auxName));
                     strcpy(txt[pos]->palavras_chave[i - 4], auxName);
                     printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, txt[pos]->palavras_chave[i - 4]);
-                }
-            } else {
-                if (i == 0) {
-                    txt[pos]->codigo = atoi(pch);
-                    printf("\ni = %d pos = %d codigo = %d\n", i, pos, txt[pos]->codigo);
-                }
-                if (i == 2) {
-                    txt[pos]->relevancia = atoi(pch - 1);
-                    printf("i = %d pos = %d relevancia = %d\n", i, pos, txt[pos]->relevancia);
-                }
+
+                    break;
             }
+
             pch = strtok(NULL, ",");
-            if (pch != NULL) {
-                pch++;
-            }
+            if (pch != NULL) pch++;
             i++;
         } while (pch != NULL);
 
