@@ -6,12 +6,14 @@
 
 #include "utils.h"
 
+// Struct para sites
 struct site_ {
     int codigo;
     char *nome;
     int relevancia;
     char *link;
-    char **palavra_chave;
+    char **palavras_chave;
+    int qtde_palavras_chave;
 };
 
 /*
@@ -45,7 +47,7 @@ SITE **readFile(FILE *inputFile) {
     int pos = 0;
     SITE **txt = malloc(sizeof(SITE **) * (pos + 1));
     txt[pos] = malloc(sizeof(SITE *));
-    txt[pos]->palavra_chave = malloc(sizeof(char *) * 10);
+    txt[pos]->palavras_chave = malloc(sizeof(char *) * 10);
 
     while (!feof(inputFile)) {
         int i = 0;
@@ -70,10 +72,10 @@ SITE **readFile(FILE *inputFile) {
                     printf("i = %d pos = %d link = %s\n", i, pos, txt[pos]->link);
                 }
                 if (i >= 4) {
-                    txt[pos]->palavra_chave = malloc(sizeof(char *) * 10);
-                    txt[pos]->palavra_chave[i - 4] = malloc(sizeof(char) * strlen(auxName));
-                    strcpy(txt[pos]->palavra_chave[i - 4], auxName);
-                    printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, txt[pos]->palavra_chave[i - 4]);
+                    txt[pos]->palavras_chave = malloc(sizeof(char *) * 10);
+                    txt[pos]->palavras_chave[i - 4] = malloc(sizeof(char) * strlen(auxName));
+                    strcpy(txt[pos]->palavras_chave[i - 4], auxName);
+                    printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, txt[pos]->palavras_chave[i - 4]);
                 }
             } else {
                 if (i == 0) {
@@ -91,10 +93,11 @@ SITE **readFile(FILE *inputFile) {
             }
             i++;
         } while (pch != NULL);
+
         pos++;
         txt = realloc(txt, sizeof(SITE **) * (pos + 1));
         txt[pos] = malloc(sizeof(SITE *));
-        txt[pos]->palavra_chave = malloc(sizeof(char *) * 10);
+        txt[pos]->palavras_chave = malloc(sizeof(char *) * 10);
     }
 
     for (int i = 0; i < pos; i++) {
@@ -104,7 +107,7 @@ SITE **readFile(FILE *inputFile) {
         printf("%s\n", txt[i]->link);
         //for(int j = 0; j < 3; j++)
         //	printf("%s\n", txt[i]->palavra_chave[j]);
-        printf("%s\n", txt[i]->palavra_chave);
+        printf("%s\n", txt[i]->palavras_chave[0]);
         //printf("%s\n", txt[i]->palavra_chave[1]);
         //printf("%s\n", txt[i]->palavra_chave[2]);
     }

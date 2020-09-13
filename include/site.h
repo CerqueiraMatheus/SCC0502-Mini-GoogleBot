@@ -12,7 +12,7 @@
 
 typedef struct site_ SITE;
 
-SITE *inserir_site(int codigo, char *nome, int relevancia, char *link, char **palavra_chave);
+SITE *inserir_site(int codigo, char *nome, int relevancia, char *link, char **palavras_chave);
 
 int remover_site(SITE **site);
 

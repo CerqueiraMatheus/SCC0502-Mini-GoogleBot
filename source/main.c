@@ -17,7 +17,7 @@ int main() {
     char *nome;
     int relevancia;
     char *link;
-    char **palavra_chave;
+    char **palavras_chave;
     char *nova_palavra;
     int nova_relevancia;
     int flag;
@@ -36,7 +36,7 @@ int main() {
         switch (escolha) {
             case 1:
                 //pegar informações
-                site = inserir_site(codigo, nome, relevancia, link, palavra_chave);
+                site = inserir_site(codigo, nome, relevancia, link, palavras_chave);
                 //tornar o site criado visível para todo o programa
                 break;
             case 2:
