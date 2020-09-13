@@ -5,7 +5,7 @@ BINARY=./test
 PROG=./source/main.c
 
 all:
-	$(CC) -o $(BINARY) $(PROG) $(SOURCES) -I$(INCLUDES) 
+	$(CC) -g -o $(BINARY) $(PROG) $(SOURCES) -I$(INCLUDES) 
 
 run:
 	$(BINARY)
