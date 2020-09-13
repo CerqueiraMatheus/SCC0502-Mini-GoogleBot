@@ -1,4 +1,6 @@
 #ifndef GOOGLEBOT_H
+	#include "utils.h"
+
 	#define GOOGLEBOT_H
 
 	#define TRUE 1
@@ -14,6 +16,8 @@
 	void inserir_palavra_chave(GOOGLEBOT **site, char *nova_palavra);
 
 	void atualizar_relevancia(GOOGLEBOT **site, int nova_relevancia);
+
+	GOOGLEBOT **readFile(FILE *inputFile);
 
 	
 #endif

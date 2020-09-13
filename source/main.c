@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "utils.h"
 #include "Googlebot.h"
 
 #define TRUE 1
@@ -9,7 +10,11 @@
 int main(){
 
 	//fazer a leitura do arquivo googlebot.txt
+	FILE *fp = fopen("googlebot.txt", "r");
+	GOOGLEBOT **txt = readFile(fp);
 
+	
+	
 	GOOGLEBOT *site;
 	int codigo;
 	char *nome;

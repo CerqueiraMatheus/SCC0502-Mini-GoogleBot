@@ -1,6 +1,6 @@
 CC=gcc
 INCLUDES=./include/
-SOURCES=./source/Googlebot.c
+SOURCES=./source/Googlebot.c ./source/utils.c
 BINARY=./test
 PROG=./source/main.c
 

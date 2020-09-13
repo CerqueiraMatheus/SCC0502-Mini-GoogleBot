@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "utils.h"
 
 #define INPUT_BUFFER 2048
 
