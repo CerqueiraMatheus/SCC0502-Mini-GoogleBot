@@ -45,7 +45,7 @@ void atualizar_relevancia(SITE **site, int nova_relevancia) {
 SITE **readFile(FILE *inputFile) {
     printf("Estou na readFile\n");
 
-    SITE **site = NULL;
+    SITE **sites = NULL;
     int pos = 0;
 
     while (!feof(inputFile)) {
@@ -58,8 +58,9 @@ SITE **readFile(FILE *inputFile) {
 
         do {
             // Aloca a lista de sites e o site atual
-            site = realloc(site, sizeof(SITE **) * (pos + 1));
-            site[pos] = calloc(1, sizeof(SITE *));
+            sites = realloc(sites, sizeof(SITE **) * (pos + 1));
+            printf("POS: %d\n", pos);
+            sites[pos] = calloc(1, sizeof(SITE *));
 
             // Caso não seja um número
             if ((i != 0) && (i != 2)) {
@@ -70,45 +71,43 @@ SITE **readFile(FILE *inputFile) {
             switch (i) {
                 // Caso 0: código
                 case 0:
-                    site[pos]->codigo = atoi(pch);
-                    printf("\ni = %d pos = %d codigo = %d\n", i, pos, site[pos]->codigo);
+                    sites[pos]->codigo = atoi(pch);
+                    printf("\ni = %d pos = %d codigo = %d\n", i, pos, sites[pos]->codigo);
 
                     break;
 
                 // Caso 1: nome
                 case 1:
-                    printf("AUX XX %d\n", (int) strlen(aux_name));
-                    site[pos]->nome = calloc(strlen(aux_name) + 1, sizeof(char));
+                    sites[pos]->nome = calloc(strlen(aux_name) + 1, sizeof(char));
                     for (int j = 0; j <= strlen(aux_name); j++) {
-                        site[pos]->nome[j] = aux_name[j];
-                        printf("%d\n", j);
+                        printf("%c\n", aux_name[j]);
                     }
                     // strcpy(site[pos]->nome, aux_name);
 
-                    printf("i = %d pos = %d nome = %s\n", i, pos, site[pos]->nome);
+                    printf("i = %d pos = %d nome = %s\n", i, pos, sites[pos]->nome);
 
                     break;
 
                 // Caso 2: relevância
                 case 2:
-                    site[pos]->relevancia = atoi(pch - 1);
-                    printf("i = %d pos = %d relevancia = %d\n", i, pos, site[pos]->relevancia);
+                    sites[pos]->relevancia = atoi(pch - 1);
+                    printf("i = %d pos = %d relevancia = %d\n", i, pos, sites[pos]->relevancia);
                     break;
 
                 // Caso 3: link
                 case 3:
-                    site[pos]->link = malloc(sizeof(char) * strlen(aux_name));
-                    strcpy(site[pos]->link, aux_name);
-                    printf("i = %d pos = %d link = %s\n", i, pos, site[pos]->link);
+                    sites[pos]->link = malloc(sizeof(char) * strlen(aux_name));
+                    strcpy(sites[pos]->link, aux_name);
+                    printf("i = %d pos = %d link = %s\n", i, pos, sites[pos]->link);
 
                     break;
 
                 // Caso "padrão": palavras-chave
                 default:
-                    site[pos]->palavras_chave = malloc(sizeof(char *) * 10);
-                    site[pos]->palavras_chave[i - 4] = malloc(sizeof(char) * strlen(aux_name));
-                    strcpy(site[pos]->palavras_chave[i - 4], aux_name);
-                    printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, site[pos]->palavras_chave[i - 4]);
+                    sites[pos]->palavras_chave = malloc(sizeof(char *) * 10);
+                    sites[pos]->palavras_chave[i - 4] = malloc(sizeof(char) * strlen(aux_name));
+                    strcpy(sites[pos]->palavras_chave[i - 4], aux_name);
+                    printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, sites[pos]->palavras_chave[i - 4]);
 
                     break;
             }
@@ -119,17 +118,18 @@ SITE **readFile(FILE *inputFile) {
 
         } while (pch != NULL);
 
+        printf("SAIUUUUU \n");
         pos++;
     }
 
     for (int i = 0; i < pos; i++) {
-        printf("\n%d\n", site[i]->codigo);
-        printf("%s\n", site[i]->nome);
-        printf("%d\n", site[i]->relevancia);
-        printf("%s\n", site[i]->link);
+        printf("\n%d\n", sites[i]->codigo);
+        printf("%s\n", sites[i]->nome);
+        printf("%d\n", sites[i]->relevancia);
+        printf("%s\n", sites[i]->link);
         //for(int j = 0; j < 3; j++)
         //	printf("%s\n", txt[i]->palavra_chave[j]);
-        printf("%s\n", site[i]->palavras_chave[0]);
+        printf("%s\n", sites[i]->palavras_chave[0]);
         //printf("%s\n", txt[i]->palavra_chave[1]);
         //printf("%s\n", txt[i]->palavra_chave[2]);
     }
