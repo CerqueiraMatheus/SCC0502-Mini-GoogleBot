@@ -22,8 +22,10 @@ int remover_site(SITE **site);
 
 void inserir_palavra_chave(SITE **site, char *nova_palavra);
 
-void atualizar_relevancia(SITE **site, int nova_relevancia);
+// Atualiza a relevância de um site
+void atualizar_relevancia(SITE *site, int nova_relevancia);
 
+// Lê uma lista de sites a partir de um csv
 SITE **readFile(FILE *inputFile);
 
 #endif
