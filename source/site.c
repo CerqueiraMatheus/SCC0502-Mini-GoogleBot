@@ -38,8 +38,9 @@ void inserir_palavra_chave(SITE **site, char *nova_palavra) {
     printf("Estou na inserir palavra-chave\n");
 }
 
-void atualizar_relevancia(SITE **site, int nova_relevancia) {
-    printf("Estou na atualizar revelância\n");
+void atualizar_relevancia(SITE *site, int nova_relevancia) {
+    if (site != NULL)
+        site->relevancia = nova_relevancia;
 }
 
 SITE **readFile(FILE *inputFile) {
@@ -106,7 +107,8 @@ SITE **readFile(FILE *inputFile) {
                     // Realoca o array de palavras-chave de acordo
                     // com a quantidade armazenada na struct (e incrementa)
                     sites[pos]->palavras_chave =
-                        realloc(sites[pos]->palavras_chave, ++(sites[pos]->qtde_palavras_chave) * sizeof(char *));
+                        realloc(sites[pos]->palavras_chave,
+                                ++(sites[pos]->qtde_palavras_chave) * sizeof(char *));
 
                     // Aloca a palavra de acordo com o tamanho da auxliar
                     sites[pos]->palavras_chave[sites[pos]->qtde_palavras_chave - 1] =
@@ -135,11 +137,8 @@ SITE **readFile(FILE *inputFile) {
         printf("%s\n", sites[i]->nome);
         printf("%d\n", sites[i]->relevancia);
         printf("%s\n", sites[i]->link);
-        //for(int j = 0; j < 3; j++)
-        //	printf("%s\n", txt[i]->palavra_chave[j]);
-        printf("%s\n", sites[i]->palavras_chave[0]);
-        //printf("%s\n", txt[i]->palavra_chave[1]);
-        //printf("%s\n", txt[i]->palavra_chave[2]);
+        for (int j = 0; j < 3; j++)
+            printf("%s\n", sites[i]->palavras_chave[j]);
     }
     return NULL;
 }
