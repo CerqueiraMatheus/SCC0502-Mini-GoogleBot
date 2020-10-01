@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "utils.h"
-
 // Struct para sites
 struct site_ {
     int codigo;
@@ -26,25 +24,46 @@ seja inserido, uma mensagem deve ser printada ao usuário a respeito disso;
 	5. Sair: finalizar o programa.
 */
 
-SITE *inserir_site(int codigo, char *nome, int relevancia, char *link, char **palavra_chave) {
+SITE *site_inserir(int codigo, char *nome, int relevancia, char *link, char **palavra_chave) {
     printf("Estou na inserir site\n");
 }
 
-int remover_site(SITE **site) {
+int site_remover(SITE **site) {
     printf("Estou na remover site\n");
 }
 
-void inserir_palavra_chave(SITE **site, char *nova_palavra) {
+void site_inserir_pchave(SITE **site, char *nova_palavra) {
     printf("Estou na inserir palavra-chave\n");
 }
 
-void atualizar_relevancia(SITE *site, int nova_relevancia) {
+void site_set_relevancia(SITE *site, int nova_relevancia) {
     if (site != NULL)
         site->relevancia = nova_relevancia;
 }
 
-SITE **readFile(FILE *inputFile) {
-    printf("Estou na readFile\n");
+// Retorna uma linha a partir de um arquivo
+char *site_ler_linha(FILE *inputFile) {
+    char *line = NULL;
+    int pos = 0;
+
+    do {
+        if (pos % INPUT_BUFFER == 0) {
+            line = (char *)realloc(line,
+                                   (pos / INPUT_BUFFER + 1) * INPUT_BUFFER);
+        }
+        char aux = (char)fgetc(inputFile);
+        if (aux != '\r') line[pos++] = aux;
+    } while (line[pos - 1] != '\n' && !feof(inputFile));
+
+    line[pos - 1] = '\0';
+
+    return line;
+}
+
+// Lê um conjunto de sites a partir de um csv
+// Retorna uma lista de sites
+SITE **site_ler_csv(FILE *inputFile) {
+    printf("Estou na site_ler_csv\n");
 
     SITE **sites = NULL;
     int pos = 0;
@@ -58,7 +77,7 @@ SITE **readFile(FILE *inputFile) {
         int i = 0;
 
         //Recebe a linha
-        char *insertionString = readLine(inputFile);
+        char *insertionString = site_ler_linha(inputFile);
 
         //Recebe a string até a próxima vírgula
         char *pch;

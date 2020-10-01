@@ -1,6 +1,6 @@
 CC=gcc
 INCLUDES=./include/
-SOURCES=./source/site.c ./source/utils.c
+SOURCES=./source/site.c
 BINARY=./test
 PROG=./source/main.c
 

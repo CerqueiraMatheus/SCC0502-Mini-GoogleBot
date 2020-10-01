@@ -10,7 +10,7 @@
 int main() {
     //fazer a leitura do arquivo googlebot.txt
     FILE *fp = fopen("googlebot.txt", "r");
-    SITE **txt = readFile(fp);
+    SITE **txt = site_ler_csv(fp);
 
     SITE *site;
     int codigo;
@@ -36,20 +36,20 @@ int main() {
         switch (escolha) {
             case 1:
                 //pegar informações
-                site = inserir_site(codigo, nome, relevancia, link, palavras_chave);
+                site = site_inserir(codigo, nome, relevancia, link, palavras_chave);
                 //tornar o site criado visível para todo o programa
                 break;
             case 2:
-                flag = remover_site(&site);
+                flag = site_remover(&site);
                 //fazer uma função para tratamento de erro
                 break;
             case 3:
                 //ler a nova palavra
-                inserir_palavra_chave(&site, nova_palavra);
+                site_inserir_pchave(&site, nova_palavra);
                 break;
             case 4:
                 //ler a nova relevância
-                atualizar_relevancia(&site, nova_relevancia);
+                site_set_relevancia(&site, nova_relevancia);
                 break;
             default:
                 printf("ERRO\n");
