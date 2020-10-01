@@ -10,7 +10,7 @@ struct site_ {
     char *nome;
     int relevancia;
     char *link;
-    char **palavras_chave;
+    LISTA_PCHAVE *palavras_chave;
     int qtde_palavras_chave;
 };
 
@@ -72,6 +72,7 @@ SITE **site_ler_csv(FILE *inputFile) {
         // Aloca a lista de sites e o site atual
         sites = realloc(sites, sizeof(SITE *) * (pos + 1));
         sites[pos] = calloc(1, sizeof(SITE));
+        sites[pos]->palavras_chave = lista_pchave_criar();
 
         // Inicializa o contador de linhas
         int i = 0;
@@ -123,23 +124,9 @@ SITE **site_ler_csv(FILE *inputFile) {
 
                 // Caso "padrão": palavras-chave
                 default:
-                    // Realoca o array de palavras-chave de acordo
-                    // com a quantidade armazenada na struct (e incrementa)
-                    sites[pos]->palavras_chave =
-                        realloc(sites[pos]->palavras_chave,
-                                ++(sites[pos]->qtde_palavras_chave) * sizeof(char *));
-
-                    // Aloca a palavra de acordo com o tamanho da auxliar
-                    sites[pos]->palavras_chave[sites[pos]->qtde_palavras_chave - 1] =
-                        calloc(strlen(aux_name) + 1, sizeof(char));
-
-                    //Copia o conteúdo da palavra auxiliar para a atual
-                    strcpy(
-                        sites[pos]->palavras_chave[sites[pos]->qtde_palavras_chave - 1],
-                        aux_name);
-
-                    printf("i = %d pos = %d palavra_chave[%d] = %s\n", i, pos, i - 4, sites[pos]->palavras_chave[i - 4]);
-
+                    lista_pchave_inserir(sites[pos]->palavras_chave,
+                                         pchave_criar(aux_name));
+                    lista_pchave_imprimir(sites[pos]->palavras_chave);
                     break;
             }
             pch = strtok(NULL, ",");
@@ -147,7 +134,6 @@ SITE **site_ler_csv(FILE *inputFile) {
             i++;
 
         } while (pch != NULL);
-
         pos++;
     }
 
@@ -156,8 +142,7 @@ SITE **site_ler_csv(FILE *inputFile) {
         printf("%s\n", sites[i]->nome);
         printf("%d\n", sites[i]->relevancia);
         printf("%s\n", sites[i]->link);
-        for (int j = 0; j < 3; j++)
-            printf("%s\n", sites[i]->palavras_chave[j]);
+        lista_pchave_imprimir(sites[i]->palavras_chave);
     }
     return NULL;
 }

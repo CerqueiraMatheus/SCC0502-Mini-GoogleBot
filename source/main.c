@@ -48,7 +48,7 @@ int main() {
                 break;
             case 4:
                 //ler a nova relevância
-                site_set_relevancia(&site, nova_relevancia);
+                site_set_relevancia(site, nova_relevancia);
                 break;
             default:
                 printf("ERRO\n");

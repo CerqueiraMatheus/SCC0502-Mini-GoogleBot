@@ -1,7 +1,9 @@
 #ifndef SITE_H
+#define SITE_H
+
 #include <stdio.h>
 
-#define SITE_H
+#include "lista_pchave.h"
 
 // Para operações booleanas
 #define boolean int
