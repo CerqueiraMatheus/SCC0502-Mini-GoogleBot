@@ -45,7 +45,7 @@ char *pchave_get_string(PCHAVE *pchave) {
 }
 
 // Configura a string de uma palavra-chave
-boolean pchave_set_string(PCHAVE *pchave, int string) {
+boolean pchave_set_string(PCHAVE *pchave, char *string) {
     if (pchave != NULL) {
         strcpy(pchave->string, string);
         return TRUE;

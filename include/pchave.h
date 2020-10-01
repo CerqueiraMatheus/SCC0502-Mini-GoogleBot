@@ -14,6 +14,6 @@ PCHAVE *pchave_criar(char *string);
 boolean pchave_apagar(PCHAVE **pchave);
 void pchave_imprimir(PCHAVE *pchave);
 char *pchave_get_string(PCHAVE *pchave);
-boolean pchave_set_string(PCHAVE *pchave, int string);
+boolean pchave_set_string(PCHAVE *pchave, char *string);
 
 #endif
