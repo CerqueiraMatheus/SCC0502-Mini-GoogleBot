@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "site.h"
-#include "utils.h"
 
 #define TRUE 1
 #define FALSE 0
