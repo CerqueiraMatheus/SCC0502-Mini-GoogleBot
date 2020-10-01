@@ -23,12 +23,12 @@ LISTA_PCHAVE *lista_pchave_criar() {
 }
 
 //TODO: implementar a função
-boolean lista_pchave_inserir_ordenado(LISTA_PCHAVE *l, PCHAVE *pchave) {
+boolean lista_inserir_ordenado(LISTA_PCHAVE *l, PCHAVE *pchave) {
 }
 
 // Para inserir de acordo com a posição
-boolean lista_pchave_inserir_posicao(LISTA_PCHAVE *l, PCHAVE *pchave, int posicao) {
-    if (!lista_cheia(l) && posicao <= l->fim - 1) {
+boolean lista_inserir_posicao(LISTA_PCHAVE *l, PCHAVE *pchave, int posicao) {
+    if (!lista_pchave_cheia(l) && posicao <= l->fim - 1) {
         for (int i = (l->fim - 1); i >= posicao; i--) {
             l->lista[i + i] = l->lista[i];
         }
@@ -44,7 +44,7 @@ boolean lista_pchave_inserir_posicao(LISTA_PCHAVE *l, PCHAVE *pchave, int posica
 boolean lista_pchave_inserir(LISTA_PCHAVE *l, PCHAVE *pchave) {
     if (!ORDENADA) {
         // Verifica se a lista está cheia
-        if (l != NULL && !lista_cheia(l)) {
+        if (l != NULL && !lista_pchave_cheia(l)) {
             // Insere o item e retorna TRUE
             l->lista[l->fim] = pchave;
             l->fim += 1;
@@ -57,20 +57,21 @@ boolean lista_pchave_inserir(LISTA_PCHAVE *l, PCHAVE *pchave) {
 }
 
 // Busca para lista não ordenada
-int lista_pchave_busca_sequencial(LISTA_PCHAVE *l, char *string) {
+int lista_busca_sequencial(LISTA_PCHAVE *l, char *string) {
     for (int i = 0; i < l->fim; i++)
         if (!strcmp(pchave_get_string(l->lista[i]), string))
             return i;
     return ERRO;
 }
 
+//TODO: implementar busca binária e função para comparar
 // Busca para lista ordenada
-int lista_pchave_busca_ordenada(LISTA_PCHAVE *l, char *string) {
+int lista_busca_ordenada(LISTA_PCHAVE *l, char *string) {
     for (int i = 0; i < l->fim; i++)
         if (!strcmp(pchave_get_string(l->lista[i]), string))
             return i;
-        else if (item_get_chave(l->lista[i]) > chave)
-            return ERRO;
+    //else if (item_get_chave(l->lista[i]) > chave)
+    //    return ERRO;
     return ERRO;
 }
 
@@ -99,7 +100,7 @@ boolean lista_pchave_remover(LISTA_PCHAVE *lista, char *string) {
 
     if (item_posicao != ERRO) {
         // Remove o item da posição
-        item_apagar(&lista->lista[item_posicao]);
+        pchave_apagar(&lista->lista[item_posicao]);
 
         // Reposiciona os itens
         for (int i = item_posicao; i < lista->fim; i++)
@@ -143,7 +144,7 @@ void lista_pchave_imprimir(LISTA_PCHAVE *l) {
 void lista_pchave_apagar(LISTA_PCHAVE **lista) {
     if (*lista != NULL) {
         for (int i = (*lista)->inicio; i < (*lista)->fim; i++)
-            item_apagar(&(*lista)->lista[i]);
+            pchave_apagar(&(*lista)->lista[i]);
         free(*lista);
         *lista = NULL;
     }
