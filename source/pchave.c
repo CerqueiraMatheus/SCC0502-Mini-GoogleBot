@@ -13,8 +13,9 @@ PCHAVE *pchave_criar(char *string) {
     PCHAVE *pchave;
     pchave = (PCHAVE *)malloc(sizeof(PCHAVE));
 
-    if (pchave != NULL && strlen(string) < LIMITE_STRING)
+    if (pchave != NULL && (strlen(string) <= LIMITE_STRING)) {
         strcpy(pchave->string, string);
+    }
 
     return pchave;
 }
