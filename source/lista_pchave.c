@@ -24,6 +24,7 @@ LISTA_PCHAVE *lista_pchave_criar() {
 }
 
 // Verifica se s1 > s2
+// Retorna TRUE caso sim, FALSE para não
 boolean lista_checa_strings(char *s1, char *s2) {
     int i = 0;
 
@@ -98,7 +99,7 @@ int lista_busca_binaria(PCHAVE **lista, int inicio, int fim, char *string) {
         int meio = (inicio + fim) / 2;
 
         //Caso 1: valor encontrado
-        if (string == pchave_get_string(lista[meio])) return meio;
+        if (!strcmp(string, pchave_get_string(lista[meio]))) return meio;
 
         //Caso 2: busca pela "direita"
         if (lista_checa_strings(string, pchave_get_string(lista[meio])))
