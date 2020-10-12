@@ -53,7 +53,8 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
 
     while (!feof(inputFile)) {
     	SITE *site = site_criar();
-        
+        PCHAVE *pchave;
+    	LISTA_PCHAVE *l;
         // Inicializa o contador de linhas
         int i = 0;
 
@@ -95,13 +96,15 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
 
                 // Caso "padrão": palavras-chave
                 default:
-                	site_set_palavras_chave(site, aux_name);
+                	pchave = pchave_criar(aux_name);
+                	lista_pchave_inserir(l, pchave);
+                	site_set_palavras_chave(site, l);
                     break;
             }
             pch = strtok(NULL, ",");
             if (pch != NULL) pch++;
             i++;
-
+          
         } while (pch != NULL);
         pos++;
     }

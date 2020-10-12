@@ -62,6 +62,13 @@ int site_get_codigo(SITE *site){
 	}	
 }
 
+boolean site_set_codigo(SITE *site, int codigo){
+        if(site != NULL){
+			site->codigo = codigo;
+                return (TRUE);
+        }
+        return (FALSE);
+}
 
 boolean site_set_nome(SITE *site, char *nome){
         if(site != NULL){
@@ -88,9 +95,9 @@ boolean site_set_link(SITE *site, char *link){
         return (FALSE);
 }
 
-boolean site_set_palavras_chave(SITE *site, char *aux_name){
+boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l){
         if(site != NULL){
-			site->palavras_chave = lista_pchave_inserir(palavras_chave, pchave_criar(aux_name));
+			site->palavras_chave = l;
                 return (TRUE);
         }
         return (FALSE);

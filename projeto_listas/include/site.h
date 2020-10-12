@@ -24,6 +24,6 @@
 	boolean site_set_nome(SITE *site, char *nome);
 	boolean site_set_relevancia(SITE *site, int relevancia);
 	boolean site_set_link(SITE *site, char *link);
-	boolean site_set_palavras_chave(SITE *site, char *auxname);
+	boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l);
 
 #endif
