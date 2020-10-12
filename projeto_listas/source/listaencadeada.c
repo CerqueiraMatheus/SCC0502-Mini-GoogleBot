@@ -134,13 +134,10 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 	NO *p;
 	NO *q;
 	if (lista != NULL){
-		printf("vou inserir na lista\n");
 		if(lista->tamanho != 0){
 			NO *p = lista->inicio; NO *q = NULL;
 			while (p != NULL) {
-				printf("entrei no while\n");
 				if (site_get_codigo(p->site) > site_get_codigo(site)){
-					printf("estou no if pq o codigo é maior\n");
 					NO *pnovo = (NO *) malloc(sizeof (NO));
 					q->proximo = pnovo;
 					pnovo->site = site;
@@ -154,19 +151,12 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 					p = p->proximo;
 				}
 			}
-			printf("estou fora do while\n");
 			NO *pnew = (NO *) malloc(sizeof (NO));
-			printf("passei1\n)");
 			lista->fim->proximo = pnew;
-			printf("passei2\n)");
 			pnew->site = site;
-			printf("passei3\n)");
 			pnew->proximo = NULL;
-			printf("passei4\n)");
 			lista->fim = pnew;
-			printf("passei5\n)");
 			lista->tamanho++;
-			printf("passei6\n)");
 			return (TRUE);
 		}
 		else{

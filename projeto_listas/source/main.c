@@ -14,7 +14,6 @@ int main() {
 
     LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
 
-    //lista_imprimir_encadeada(lista_sites);
 
     SITE *site;
     int codigo;
@@ -51,16 +50,20 @@ int main() {
                     printf("código inexistente, não foi possível apagar o site\n");
                 break;
             case 3:
+                scanf("%d", &codigo);
                 scanf("%s", auxname);
                 pchave = pchave_criar(auxname);
                 lista_pchave_inserir(l, pchave);
                 site_set_palavras_chave(site, l);
                 break;
             case 4:
+                scanf("%d", &codigo);
+                site = lista_busca_encadeada(lista_sites, codigo);
                 scanf("%d", &relevancia);
                 site_set_relevancia(site, relevancia);
                 break;
             default:
+                lista_imprimir_encadeada(lista_sites);
                 printf("ERRO\n");
         }
     }
