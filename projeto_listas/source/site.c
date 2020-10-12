@@ -12,6 +12,32 @@ struct site_ {
     LISTA_PCHAVE *palavras_chave;
 };
 
+SITE *site_criar_completo(){
+    SITE *site = site_criar();
+    int codigo;
+    char *nome = malloc(200);
+    int relevancia;
+    char *link = malloc(200);
+    char *auxname = malloc(200);
+    PCHAVE *pchave;
+    LISTA_PCHAVE *l = lista_pchave_criar();
+
+	scanf("%d", &codigo);
+    scanf("%s", nome);
+    scanf("%d", &relevancia);
+    scanf("%s", link);
+    scanf("%s", auxname);
+    pchave = pchave_criar(auxname);
+    site_set_palavras_chave(site, l);
+    site_set_codigo(site, codigo);
+    site_set_nome(site, nome);
+    site_set_relevancia(site, relevancia);
+    site_set_link(site, link);
+    lista_pchave_inserir(l, pchave);
+    
+	return (site);
+}
+
 SITE *site_criar(){
 	SITE *site;
 

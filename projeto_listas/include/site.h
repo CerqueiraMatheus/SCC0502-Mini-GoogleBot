@@ -10,6 +10,7 @@
 	typedef struct site_ SITE;
 
 	//funções de manipulação do TAD, começar com o nome do TAD
+	SITE *site_criar_completo();
 	SITE *site_criar();
 	//passar a variável por referência 
 	//pois está alterando os dados em si
