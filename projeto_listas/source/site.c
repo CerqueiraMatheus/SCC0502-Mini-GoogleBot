@@ -12,7 +12,9 @@ struct site_ {
     LISTA_PCHAVE *palavras_chave;
 };
 
+//lê as informações do stdin e cria um novo site completo a partir delas
 SITE *site_criar_completo(){
+	//declaração de variáveis
     SITE *site = site_criar();
     int codigo;
     char *nome = malloc(200);
@@ -22,11 +24,19 @@ SITE *site_criar_completo(){
     PCHAVE *pchave;
     LISTA_PCHAVE *l = lista_pchave_criar();
 
+    //leitura de variáveis
+    printf("Digite o código do site:\n");
 	scanf("%d", &codigo);
+	printf("Digite o nome do site:\n");
     scanf("%s", nome);
+    printf("Digite a revelância do site:\n");
     scanf("%d", &relevancia);
+    printf("Digite o link do site:\n");
     scanf("%s", link);
+    printf("Digite a palavra-chave do site:\n");
     scanf("%s", auxname);
+
+    //adicionar as variáveis lidas ao novo site
     pchave = pchave_criar(auxname);
     site_set_palavras_chave(site, l);
     site_set_codigo(site, codigo);
@@ -38,11 +48,10 @@ SITE *site_criar_completo(){
 	return (site);
 }
 
+//cria um novo site em branco
 SITE *site_criar(){
 	SITE *site;
-
 	site = (SITE *) malloc (sizeof(SITE));
-
 	if (site != NULL){
 		site->codigo = 0;
 	    site->nome = NULL;
@@ -54,6 +63,7 @@ SITE *site_criar(){
 	return (site);
 }
 
+//apaga um site da lista a partir de seu endereço
 boolean site_apagar(SITE **site){
 	//vê se o conteúdo é diferente de 0, ou seja se existe o site
 	if(*site != NULL){
@@ -68,6 +78,8 @@ boolean site_apagar(SITE **site){
 	return (FALSE);
 }
 
+//imprime o código, o nome, a revelancia, o link e 
+//as palavras-chave de um determinado site
 void site_imprimir(SITE *site){
 	//se não for um ponteiro nulo, ou seja, se existir
 	if(site != NULL){
@@ -79,6 +91,7 @@ void site_imprimir(SITE *site){
 	}
 }
 
+//retorna o código de um site
 int site_get_codigo(SITE *site){
 	if (site != NULL)
 		return (site->codigo);
@@ -88,6 +101,7 @@ int site_get_codigo(SITE *site){
 	}	
 }
 
+//retorna a lista de palavras-chave de um site
 LISTA_PCHAVE *site_get_palavras_chave(SITE *site){
 	if (site != NULL)
 		return (site->palavras_chave);
@@ -97,6 +111,7 @@ LISTA_PCHAVE *site_get_palavras_chave(SITE *site){
 	}
 }
 
+//define um código para o site
 boolean site_set_codigo(SITE *site, int codigo){
         if(site != NULL){
 			site->codigo = codigo;
@@ -105,6 +120,7 @@ boolean site_set_codigo(SITE *site, int codigo){
         return (FALSE);
 }
 
+//define um nome para o site
 boolean site_set_nome(SITE *site, char *nome){
         if(site != NULL){
 			site->nome = nome;
@@ -113,7 +129,7 @@ boolean site_set_nome(SITE *site, char *nome){
         return (FALSE);
 }
 
-
+//define uma revelância para um site
 boolean site_set_relevancia(SITE *site, int relevancia){
         if(site != NULL){
 			site->relevancia = relevancia;
@@ -122,6 +138,7 @@ boolean site_set_relevancia(SITE *site, int relevancia){
         return (FALSE);
 }
 
+//define um link para um site
 boolean site_set_link(SITE *site, char *link){
         if(site != NULL){
 			site->link = link;
@@ -130,6 +147,7 @@ boolean site_set_link(SITE *site, char *link){
         return (FALSE);
 }
 
+//define uma palavra-chave para um site
 boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l){
         if(site != NULL){
 			site->palavras_chave = l;

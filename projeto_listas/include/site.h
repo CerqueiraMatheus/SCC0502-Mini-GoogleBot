@@ -9,17 +9,10 @@
 
 	typedef struct site_ SITE;
 
-	//funções de manipulação do TAD, começar com o nome do TAD
 	SITE *site_criar_completo();
 	SITE *site_criar();
-	//passar a variável por referência 
-	//pois está alterando os dados em si
 	boolean site_apagar(SITE **site);
-	//necessário por causa do information hiding
-	//tenho que passar o ponteiro por causa do information hiding
 	void site_imprimir(SITE *site);
-	//retornar o conteúdo do site
-	//(get para recuperar e set para alterar)
 	int site_get_codigo(SITE *site);
 	LISTA_PCHAVE *site_get_palavras_chave(SITE *site);
 	boolean site_set_codigo(SITE *site, int chave);

@@ -28,7 +28,8 @@ GCC
 
 ## Justificativas para as implementações escolhidas para as estruturas e de seus métodos
 
-- A adicionar.
+- Utilizamos o TAD de lista sequencial para a lista de palavras chave de cada site pois, de acordo com o enuciado do problema, o número máximo de elementos dessa lista é 10, um valor imutável.
+- Utilizamos o TAD de lista encadeada para a lista de sites. O número de sites é mutável, podendo-se facilmente aumentar ou diminuir de acordo com a necessidade do uśuário. 
 
 ## Integrantes
 

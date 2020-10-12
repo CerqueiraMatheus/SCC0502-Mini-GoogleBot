@@ -17,6 +17,7 @@ struct lista_{
 	int tamanho;
 };
 
+//cria uma nova lista encadeada vazia
 LISTA *lista_criar_encadeada(void){
 	LISTA *lista = (LISTA *) malloc(sizeof(LISTA));
 	if(lista != NULL) {
@@ -44,6 +45,7 @@ char *site_ler_linha(FILE *inputFile) {
     return line;
 }
 
+//retorna uma lista de sites a partir da leitura de um arquivo csv
 LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
 
     LISTA *lista_sites = lista_criar_encadeada();
@@ -102,10 +104,8 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
             i++;
         } while (pch != NULL);
         pos++;
-        site_imprimir(site);
         lista_inserir_encadeada(lista_sites, site);
     }
-    lista_imprimir_encadeada(lista_sites);
     return lista_sites;
 }
 
@@ -130,6 +130,7 @@ boolean lista_inserir_fim_encadeada(LISTA *lista, SITE *site){
 		return (FALSE);
 }
 
+//*Insere um novo nó na lista de forma que esta continue orddenada. PARA LISTAS ORDENADAS*
 boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 	NO *p;
 	NO *q;
@@ -137,6 +138,7 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 		if(lista->tamanho != 0){
 			NO *p = lista->inicio; NO *q = NULL;
 			while (p != NULL) {
+				//Checa qual é a posição da lista que o site deve ser inserido
 				if (site_get_codigo(p->site) > site_get_codigo(site)){
 					NO *pnovo = (NO *) malloc(sizeof (NO));
 					q->proximo = pnovo;
@@ -151,6 +153,8 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 					p = p->proximo;
 				}
 			}
+			//caso o código do site a ser inserido seja o maior da lista
+			//este é colocado ao final desta
 			NO *pnew = (NO *) malloc(sizeof (NO));
 			lista->fim->proximo = pnew;
 			pnew->site = site;
@@ -159,6 +163,7 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 			lista->tamanho++;
 			return (TRUE);
 		}
+		//caso a lista não possua nenhum site ainda, este será inserido no início
 		else{
 			NO *pnovo = (NO *) malloc(sizeof (NO));
 			lista->inicio = pnovo;
@@ -175,7 +180,8 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 
 }
 
-
+//define se o site será obrigatóriamente inserido 
+//no fim ou não da lista, dependendo se esta é ordenada ou não
 boolean lista_inserir_encadeada(LISTA *lista, SITE *site){
 	int x = 0;
 	if(ORDENADA)
@@ -187,7 +193,8 @@ boolean lista_inserir_encadeada(LISTA *lista, SITE *site){
 }
 
 
-
+//realiza a busca de um site numa lista de forma sequencial
+//para listas não ordenadas
 SITE *lista_busca_sequencial_encadeada(LISTA *lista, int chave){
 	NO *p;
 	if (lista != NULL){
@@ -201,6 +208,8 @@ SITE *lista_busca_sequencial_encadeada(LISTA *lista, int chave){
 	return(NULL);
 }
 
+//realiza a busca de um site numa lista de forma binária
+//para listas ordenadas
 SITE *lista_busca_binaria_encadeada(LISTA *lista, int chave){
 
 	int begin = 0;
@@ -222,6 +231,8 @@ SITE *lista_busca_binaria_encadeada(LISTA *lista, int chave){
     return(NULL);
 }
 
+//define se o site será obrigatóriamente buscado de forma binária
+//ou sequencialmente, dependendo se esta é ordenada ou não
 SITE *lista_busca_encadeada(LISTA *lista, int chave){
 	SITE *x = malloc(sizeof(SITE*));
 	if(ORDENADA)
@@ -232,12 +243,14 @@ SITE *lista_busca_encadeada(LISTA *lista, int chave){
 	return x;
 }
 
+//checa se a lista está vazia
 boolean lista_vazia_encadeada(LISTA *lista){
 	if((lista != NULL) && lista->inicio == NULL)
 		return (TRUE);
 	return (FALSE);
 }
 
+//checa se a lista está cheia
 boolean lista_cheia_encadeada(LISTA *lista){
 	int count = 0;
 	NO *p;
@@ -252,19 +265,17 @@ boolean lista_cheia_encadeada(LISTA *lista){
 	else	return (FALSE);
 }
 
-
+//remove um site da lista, de acordo com seu código
 boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 	if (lista != NULL){
 		NO *p = lista->inicio; NO *aux = NULL;
-		lista_imprimir_encadeada(lista);
 		while(p != NULL && (site_get_codigo(p->site)) != chave) { /*procura até achar chave ou fim lista*/
 			aux = p;
 			/*aux - guarda posição anterior ao nó sendo pesquisado (p)*/
 			p = p->proximo;
 		}
 		if(p != NULL) {
-			printf("codigo encontrado\n");
-			if(p == lista->inicio) { /*se a chave está no 1o nó (Exceção a ser tratada!)*/
+			if(p == lista->inicio) { /*se a chave está no 1o nó */
 				lista->inicio = p->proximo;
 				p->proximo = NULL;
 				lista->tamanho--; free(p); return (TRUE);
@@ -275,6 +286,7 @@ boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 				lista->tamanho--; free(p); return (TRUE);
 			}
 			else{
+				/*se a chave está em um nó no meio da lista*/
 				aux->proximo = p->proximo;
 				p->proximo = NULL;
 				lista->tamanho--; free(p); return (TRUE);
@@ -286,7 +298,7 @@ boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 			printf("a lista é nula\n");
 }
 
-
+//apaga os nós da lista
 void no_apagar(int *aux, LISTA *lista){
 	NO *p = lista->inicio;
 	//caso base
@@ -305,6 +317,7 @@ void no_apagar(int *aux, LISTA *lista){
 	}
 }
 
+//apaga a lista
 void lista_apagar_encadeada(LISTA **lista){
 	int aux = (*lista)->tamanho;
 	//apaga os nós
@@ -313,7 +326,7 @@ void lista_apagar_encadeada(LISTA **lista){
 	free(*lista);
 }
 
-
+//inverte os nós da lista
 void no_inverter(int *aux, LISTA *lista){
 	NO *p = lista->inicio;
 	NO *q = lista->inicio;
@@ -344,6 +357,7 @@ void no_inverter(int *aux, LISTA *lista){
 	}
 }
 
+//inverte a lista
 void lista_inverter_encadeada(LISTA **lista){
 	int aux = (*lista)->tamanho;
 	//guarda os endereos do início e fim da lista
@@ -356,13 +370,13 @@ void lista_inverter_encadeada(LISTA **lista){
 	(*lista)->inicio = fim;
 }
 
+//imprime todos os sites de uma lista
 void lista_imprimir_encadeada(LISTA *lista){
 	NO *p;
 	if (lista != NULL){
 		p = lista->inicio;
 		while (p != NULL) {
 			site_imprimir(p->site);
-			printf("acabaei de imprimir\n");
 			p = p->proximo;
 		}
 	}
@@ -371,6 +385,7 @@ void lista_imprimir_encadeada(LISTA *lista){
 	printf("\n");
 }
 
+//compara os nós de duas listas 
 void no_comparar(LISTA *l1, LISTA *l2, int *aux, int *count){
 	NO *p;
 	NO *q;
@@ -398,6 +413,7 @@ void no_comparar(LISTA *l1, LISTA *l2, int *aux, int *count){
 
 }
 
+//compara se duas listas são iguais ou não
 int lista_comparar_encadeada(LISTA *l1, LISTA *l2){
 	int aux = 0, count = 0;
 	no_comparar(l1, l2, &aux, &count);

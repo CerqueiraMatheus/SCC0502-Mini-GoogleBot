@@ -12,9 +12,10 @@ int main() {
     //fazer a leitura do arquivo googlebot.txt
     FILE *fp = fopen("googlebot.txt", "r");
 
+    //ler o arquivo de texto e adicionar os sites lidos em uma lista
     LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
 
-
+    //declaração de variáveis
     SITE *site;
     int codigo;
     int relevancia;
@@ -36,36 +37,46 @@ int main() {
         printf("Digite sua escolha:\n");
         scanf("%d", &escolha);
         switch (escolha) {
+            //Inserir um site
             case 1:
                 //pegar informações
                 site = site_criar_completo();
                 lista_inserir_encadeada(lista_sites, site);
-
-                site_imprimir(site);
+                lista_imprimir_encadeada(lista_sites);
                 break;
+            //Remover um site
             case 2:
+                printf("Digite o código do site:\n");
                 scanf("%d", &codigo);
                 flag = lista_remover_site_encadeada(lista_sites, codigo);
                 if(flag == 0)
                     printf("código inexistente, não foi possível apagar o site\n");
+                lista_imprimir_encadeada(lista_sites);
                 break;
+            //Inserir palavra-chave
             case 3:
+                printf("Digite o código do site:\n");
                 scanf("%d", &codigo);
                 site = lista_busca_encadeada(lista_sites, codigo);
+                printf("Digite a nova palavra-chave:\n");
                 scanf("%s", auxname);
                 pchave = pchave_criar(auxname);
                 lista_pchave_inserir(site_get_palavras_chave(site), pchave);
-                //site_set_palavras_chave(site, l);
+                lista_imprimir_encadeada(lista_sites);
                 break;
+            //Atualizar relevância
             case 4:
+                printf("Digite o código do site:\n");
                 scanf("%d", &codigo);
                 site = lista_busca_encadeada(lista_sites, codigo);
+                printf("Digite a nova relevância:\n");
                 scanf("%d", &relevancia);
                 site_set_relevancia(site, relevancia);
-                break;
-            default:
                 lista_imprimir_encadeada(lista_sites);
-                printf("ERRO\n");
+                break;
+            //Sair
+            default:
+                printf("Programa terminado\n");
         }
     }
 
