@@ -1,8 +1,7 @@
-#include "site.h"
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
+#include "site.h"
 
 // Struct para sites
 struct site_ {
@@ -11,138 +10,132 @@ struct site_ {
     int relevancia;
     char *link;
     LISTA_PCHAVE *palavras_chave;
-    int qtde_palavras_chave;
 };
 
-/*
-	1.Inserir um site: a inserção deve ser ordenada pela chave primária, isto é, o código do
-site. O sistema não deve aceitar valores de código já existentes;
-	2. Remover um site: dado um código, deve-se excluir o site. Caso um código inexistente
-seja inserido, uma mensagem deve ser printada ao usuário a respeito disso;
-	3. Inserir palavra-chave: dado um código, pode-se adicionar uma nova palavra-chave.
-	4. Atualizar relevância: dado um código, deve-se atualizar a relevância do site;
-	5. Sair: finalizar o programa.
-*/
+SITE *site_criar_completo(){
+    SITE *site = site_criar();
+    int codigo;
+    char *nome = malloc(200);
+    int relevancia;
+    char *link = malloc(200);
+    char *auxname = malloc(200);
+    PCHAVE *pchave;
+    LISTA_PCHAVE *l = lista_pchave_criar();
 
-SITE *site_inserir(int codigo, char *nome, int relevancia, char *link, char **palavra_chave) {
-    printf("Estou na inserir site\n");
+	scanf("%d", &codigo);
+    scanf("%s", nome);
+    scanf("%d", &relevancia);
+    scanf("%s", link);
+    scanf("%s", auxname);
+    pchave = pchave_criar(auxname);
+    site_set_palavras_chave(site, l);
+    site_set_codigo(site, codigo);
+    site_set_nome(site, nome);
+    site_set_relevancia(site, relevancia);
+    site_set_link(site, link);
+    lista_pchave_inserir(l, pchave);
+    
+	return (site);
 }
 
-int site_remover(SITE **site) {
-    printf("Estou na remover site\n");
+SITE *site_criar(){
+	SITE *site;
+
+	site = (SITE *) malloc (sizeof(SITE));
+
+	if (site != NULL){
+		site->codigo = 0;
+	    site->nome = NULL;
+	    site->relevancia = 0;
+	    site->link = NULL;
+	    site->palavras_chave = lista_pchave_criar();
+	}
+		
+	return (site);
 }
 
-void site_inserir_pchave(SITE **site, char *nova_palavra) {
-    printf("Estou na inserir palavra-chave\n");
+boolean site_apagar(SITE **site){
+	//vê se o conteúdo é diferente de 0, ou seja se existe o site
+	if(*site != NULL){
+		free((*site)->nome);
+	    free((*site)->link);
+	    lista_pchave_apagar(&(*site)->palavras_chave);
+		free (*site);
+		//precaução extra(altera o valor da variável) 
+		*site = NULL;
+		return (TRUE);
+	}	
+	return (FALSE);
 }
 
-void site_set_relevancia(SITE *site, int nova_relevancia) {
-    if (site != NULL)
-        site->relevancia = nova_relevancia;
+void site_imprimir(SITE *site){
+	//se não for um ponteiro nulo, ou seja, se existir
+	if(site != NULL){
+		printf("codigo: %d\n ", site->codigo);
+		printf("nome: %s\n ", site->nome);
+		printf("relevancia: %d\n ", site->relevancia);
+		printf("link: %s\n ", site->link);
+		lista_pchave_imprimir(site->palavras_chave);
+	}
 }
 
-// Retorna uma linha a partir de um arquivo
-char *site_ler_linha(FILE *inputFile) {
-    char *line = NULL;
-    int pos = 0;
+int site_get_codigo(SITE *site){
+	if (site != NULL)
+		return (site->codigo);
+	else{
+		printf("\nERRO: item_get_chave\n");
+		exit(1);
+	}	
+}
 
-    do {
-        if (pos % INPUT_BUFFER == 0) {
-            line = (char *)realloc(line,
-                                   (pos / INPUT_BUFFER + 1) * INPUT_BUFFER);
+boolean site_set_codigo(SITE *site, int codigo){
+        if(site != NULL){
+			site->codigo = codigo;
+                return (TRUE);
         }
-        char aux = (char)fgetc(inputFile);
-        if (aux != '\r') line[pos++] = aux;
-    } while (line[pos - 1] != '\n' && !feof(inputFile));
-
-    line[pos - 1] = '\0';
-
-    return line;
+        return (FALSE);
 }
 
-// Lê um conjunto de sites a partir de um csv
-// Retorna uma lista de sites
-SITE **site_ler_csv(FILE *inputFile) {
-    printf("Estou na site_ler_csv\n");
-
-    SITE **sites = NULL;
-    int pos = 0;
-
-    while (!feof(inputFile)) {
-        // Aloca a lista de sites e o site atual
-        sites = realloc(sites, sizeof(SITE *) * (pos + 1));
-        sites[pos] = calloc(1, sizeof(SITE));
-        sites[pos]->palavras_chave = lista_pchave_criar();
-
-        // Inicializa o contador de linhas
-        int i = 0;
-
-        //Recebe a linha
-        char *insertionString = site_ler_linha(inputFile);
-
-        //Recebe a string até a próxima vírgula
-        char *pch;
-        char aux_name[50];
-        pch = strtok(insertionString, ",");
-
-        do {
-            // Caso não seja um número
-            if ((i != 0) && (i != 2)) {
-                strncpy(aux_name, pch - 1, strlen(pch) + 1);
-                aux_name[strlen(pch) + 1] = '\0';
-            }
-
-            switch (i) {
-                // Caso 0: código
-                case 0:
-                    sites[pos]->codigo = atoi(pch);
-                    printf("\ni = %d pos = %d codigo = %d\n", i, pos, sites[pos]->codigo);
-
-                    break;
-
-                // Caso 1: nome
-                case 1:
-                    sites[pos]->nome = calloc(200, sizeof(char));
-                    strcpy(sites[pos]->nome, aux_name);
-                    printf("i = %d pos = %d nome = %s\n", i, pos, sites[pos]->nome);
-
-                    break;
-
-                // Caso 2: relevância
-                case 2:
-                    sites[pos]->relevancia = atoi(pch - 1);
-                    printf("i = %d pos = %d relevancia = %d\n", i, pos, sites[pos]->relevancia);
-                    break;
-
-                // Caso 3: link
-                case 3:
-                    sites[pos]->link = calloc(strlen(aux_name) + 1, sizeof(char));
-                    strcpy(sites[pos]->link, aux_name);
-                    printf("i = %d pos = %d link = %s\n", i, pos, sites[pos]->link);
-
-                    break;
-
-                // Caso "padrão": palavras-chave
-                default:
-                    lista_pchave_inserir(sites[pos]->palavras_chave,
-                                         pchave_criar(aux_name));
-                    lista_pchave_imprimir(sites[pos]->palavras_chave);
-                    break;
-            }
-            pch = strtok(NULL, ",");
-            if (pch != NULL) pch++;
-            i++;
-
-        } while (pch != NULL);
-        pos++;
-    }
-
-    for (int i = 0; i < pos; i++) {
-        printf("\n%d\n", sites[i]->codigo);
-        printf("%s\n", sites[i]->nome);
-        printf("%d\n", sites[i]->relevancia);
-        printf("%s\n", sites[i]->link);
-        lista_pchave_imprimir(sites[i]->palavras_chave);
-    }
-    return NULL;
+boolean site_set_nome(SITE *site, char *nome){
+        if(site != NULL){
+			site->nome = nome;
+                return (TRUE);
+        }
+        return (FALSE);
 }
+
+
+boolean site_set_relevancia(SITE *site, int relevancia){
+        if(site != NULL){
+			site->relevancia = relevancia;
+                return (TRUE);
+        }
+        return (FALSE);
+}
+
+boolean site_set_link(SITE *site, char *link){
+        if(site != NULL){
+			site->link = link;
+                return (TRUE);
+        }
+        return (FALSE);
+}
+
+boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l){
+        if(site != NULL){
+			site->palavras_chave = l;
+                return (TRUE);
+        }
+        return (FALSE);
+}
+
+
+
+
+
+
+
+
+
+
+

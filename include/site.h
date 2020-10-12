@@ -1,34 +1,30 @@
 #ifndef SITE_H
-#define SITE_H
+	#define SITE_H
 
-#include <stdio.h>
+	#define TRUE 1
+	#define FALSE 0
+	#define boolean int
+	#include "lista_pchave.h"
 
-#include "lista_pchave.h"
 
-// Para operações booleanas
-#define boolean int
-#define TRUE 1
-#define FALSE 0
+	typedef struct site_ SITE;
 
-// Para ler linhas
-#define INPUT_BUFFER 2048
-
-// Definições de limite previstas pelo exercício
-#define LIMITE_PALAVRAS 10
-#define LIMITE_STRING 50
-
-typedef struct site_ SITE;
-
-SITE *site_inserir(int codigo, char *nome, int relevancia, char *link, char **palavras_chave);
-
-int site_remover(SITE **site);
-
-void site_inserir_pchave(SITE **site, char *nova_palavra);
-
-// Atualiza a relevância de um site
-void site_set_relevancia(SITE *site, int nova_relevancia);
-
-// Lê uma lista de sites a partir de um csv
-SITE **site_ler_csv(FILE *inputFile);
+	//funções de manipulação do TAD, começar com o nome do TAD
+	SITE *site_criar_completo();
+	SITE *site_criar();
+	//passar a variável por referência 
+	//pois está alterando os dados em si
+	boolean site_apagar(SITE **site);
+	//necessário por causa do information hiding
+	//tenho que passar o ponteiro por causa do information hiding
+	void site_imprimir(SITE *site);
+	//retornar o conteúdo do site
+	//(get para recuperar e set para alterar)
+	int site_get_codigo(SITE *site);
+	boolean site_set_codigo(SITE *site, int chave);
+	boolean site_set_nome(SITE *site, char *nome);
+	boolean site_set_relevancia(SITE *site, int relevancia);
+	boolean site_set_link(SITE *site, char *link);
+	boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l);
 
 #endif

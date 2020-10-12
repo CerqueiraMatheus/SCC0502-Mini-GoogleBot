@@ -10,7 +10,7 @@
 #define boolean int
 
 #define ERRO -32000
-#define ORDENADA 0
+#define ORDENADA 1
 
 typedef struct lista_pchave_ LISTA_PCHAVE;
 

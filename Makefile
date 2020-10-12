@@ -1,6 +1,6 @@
 CC=gcc
 INCLUDES=./include/
-SOURCES=./source/site.c ./source/pchave.c ./source/lista_pchave.c
+SOURCES=./source/site.c ./source/pchave.c ./source/lista_pchave.c ./source/listaencadeada.c 
 BINARY=./test
 PROG=./source/main.c
 

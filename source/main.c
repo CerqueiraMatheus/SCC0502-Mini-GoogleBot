@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "listaencadeada.h"
 #include "site.h"
+#include "lista_pchave.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -9,17 +11,18 @@
 int main() {
     //fazer a leitura do arquivo googlebot.txt
     FILE *fp = fopen("googlebot.txt", "r");
-    SITE **txt = site_ler_csv(fp);
+
+    LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
+
 
     SITE *site;
     int codigo;
-    char *nome;
     int relevancia;
-    char *link;
-    char **palavras_chave;
-    char *nova_palavra;
-    int nova_relevancia;
-    int flag;
+    char *auxname = malloc(200);
+    PCHAVE *pchave;
+    LISTA_PCHAVE *l = lista_pchave_criar();
+
+    int flag = 1;
 
     int escolha = 0;
     printf("=====MENU=====\n");
@@ -35,24 +38,33 @@ int main() {
         switch (escolha) {
             case 1:
                 //pegar informações
-                site = site_inserir(codigo, nome, relevancia, link, palavras_chave);
-                //tornar o site criado visível para todo o programa
+                site = site_criar_completo();
+                lista_inserir_encadeada(lista_sites, site);
+
+                site_imprimir(site);
                 break;
             case 2:
-                flag = site_remover(&site);
-                //fazer uma função para tratamento de erro
+                scanf("%d", &codigo);
+                flag = lista_remover_site_encadeada(lista_sites, codigo);
+                if(flag == 0)
+                    printf("código inexistente, não foi possível apagar o site\n");
                 break;
             case 3:
-                //ler a nova palavra
-                site_inserir_pchave(&site, nova_palavra);
+                scanf("%d", &codigo);
+                scanf("%s", auxname);
+                pchave = pchave_criar(auxname);
+                lista_pchave_inserir(l, pchave);
+                site_set_palavras_chave(site, l);
                 break;
             case 4:
-                //ler a nova relevância
-                site_set_relevancia(site, nova_relevancia);
+                scanf("%d", &codigo);
+                site = lista_busca_encadeada(lista_sites, codigo);
+                scanf("%d", &relevancia);
+                site_set_relevancia(site, relevancia);
                 break;
             default:
+                lista_imprimir_encadeada(lista_sites);
                 printf("ERRO\n");
-                break;
         }
     }
 
