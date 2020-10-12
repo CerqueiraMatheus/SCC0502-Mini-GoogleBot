@@ -14,6 +14,8 @@ int main() {
 
     LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
 
+    lista_imprimir_encadeada(lista_sites);
+
     SITE *site = site_criar();
     int codigo;
     char *nome = malloc(200);
@@ -22,6 +24,7 @@ int main() {
     char *auxname = malloc(200);
     PCHAVE *pchave;
     LISTA_PCHAVE *l = lista_pchave_criar();
+    int flag = 1;
 
     int escolha = 0;
     printf("=====MENU=====\n");
@@ -54,8 +57,9 @@ int main() {
                 break;
             case 2:
                 scanf("%d", &codigo);
-                lista_remover_site_encadeada(lista_sites, codigo);
-                //fazer uma função para tratamento de erro
+                flag = lista_remover_site_encadeada(lista_sites, codigo);
+                if(flag == 0)
+                    printf("código inexistente, não foi possível apagar o site\n");
                 break;
             case 3:
                 scanf("%s", auxname);

@@ -51,7 +51,6 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
 
     while (!feof(inputFile)) {
     	SITE *site = site_criar();
-    	lista_inserir_encadeada(lista_sites, site);
         PCHAVE *pchave;
     	LISTA_PCHAVE *l = lista_pchave_criar();
         // Inicializa o contador de linhas
@@ -103,10 +102,11 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
             i++;
         } while (pch != NULL);
         pos++;
-        site_imprimir(site);
+        //site_imprimir(site);
+        lista_inserir_encadeada(lista_sites, site);
     }
-
-    return NULL;
+    //lista_imprimir_encadeada(lista_sites);
+    return lista_sites;
 }
 
  /*Insere um novo nó no fim da lista. PARA LISTAS NÃO ORDENADAS*/
@@ -135,6 +135,7 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 	NO *q;
 	int i = 0;
 	if (lista != NULL){
+		printf("vou inserir na lista\n");
 		if(lista->tamanho != 0){
 			p = lista->inicio;
 			q = lista->inicio;
@@ -171,6 +172,8 @@ boolean lista_inserir_posicao_encadeada(LISTA *lista, SITE *site){
 			return (TRUE);
 		}
 	}
+	else
+		printf("ia inserir mas a lista é nula\n");
 	return(FALSE);
 
 }
@@ -256,28 +259,36 @@ boolean lista_cheia_encadeada(LISTA *lista){
 boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 	if (lista != NULL){
 		NO *p = lista->inicio; NO *aux = NULL;
+		lista_imprimir_encadeada(lista);
 		while(p != NULL && (site_get_codigo(p->site)) != chave) { /*procura até achar chave ou fim lista*/
 			aux = p;
 			/*aux - guarda posição anterior ao nó sendo pesquisado (p)*/
 			p = p->proximo;
 		}
 		if(p != NULL) {
+			printf("codigo encontrado\n");
 			if(p == lista->inicio) { /*se a chave está no 1o nó (Exceção a ser tratada!)*/
 				lista->inicio = p->proximo;
 				p->proximo = NULL;
+				free(p);
+				lista->tamanho--; free(p); return (TRUE);
+			}
+			else if(p == lista->fim){
+				/*se chave está no último nó*/
+				lista->fim = aux;
+				lista->tamanho--; free(p); return (TRUE);
 			}
 			else {
 				aux->proximo = p->proximo;
 				p->proximo = NULL;
-			}
-			if(p == lista->fim){
-				/*se chave está no último nó*/
-				lista->fim = aux;
+				free(p);
 				lista->tamanho--; free(p); return (TRUE);
 			}
 		}
 		return (FALSE);
 	}
+	else
+			printf("a lista é nula\n");
 }
 
 
@@ -355,10 +366,12 @@ void lista_imprimir_encadeada(LISTA *lista){
 	if (lista != NULL){
 		p = lista->inicio;
 		while (p != NULL) {
-			printf("%d\n", site_get_codigo(p->site));
+			site_imprimir(p->site);
 			p = p->proximo;
 		}
 	}
+	else
+		printf("lista é nula\n");
 	printf("\n");
 }
 
