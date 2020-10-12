@@ -34,7 +34,7 @@ SITE *site_criar_completo(){
     site_set_relevancia(site, relevancia);
     site_set_link(site, link);
     lista_pchave_inserir(l, pchave);
-    
+
 	return (site);
 }
 
@@ -86,6 +86,15 @@ int site_get_codigo(SITE *site){
 		printf("\nERRO: item_get_chave\n");
 		exit(1);
 	}	
+}
+
+LISTA_PCHAVE *site_get_palavras_chave(SITE *site){
+	if (site != NULL)
+		return (site->palavras_chave);
+	else{
+		printf("\nERRO: item_get_chave\n");
+		exit(1);
+	}
 }
 
 boolean site_set_codigo(SITE *site, int codigo){

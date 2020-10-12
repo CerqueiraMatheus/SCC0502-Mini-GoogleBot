@@ -51,10 +51,11 @@ int main() {
                 break;
             case 3:
                 scanf("%d", &codigo);
+                site = lista_busca_encadeada(lista_sites, codigo);
                 scanf("%s", auxname);
                 pchave = pchave_criar(auxname);
-                lista_pchave_inserir(l, pchave);
-                site_set_palavras_chave(site, l);
+                lista_pchave_inserir(site_get_palavras_chave(site), pchave);
+                //site_set_palavras_chave(site, l);
                 break;
             case 4:
                 scanf("%d", &codigo);

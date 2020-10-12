@@ -21,6 +21,7 @@
 	//retornar o conteúdo do site
 	//(get para recuperar e set para alterar)
 	int site_get_codigo(SITE *site);
+	LISTA_PCHAVE *site_get_palavras_chave(SITE *site);
 	boolean site_set_codigo(SITE *site, int chave);
 	boolean site_set_nome(SITE *site, char *nome);
 	boolean site_set_relevancia(SITE *site, int relevancia);
