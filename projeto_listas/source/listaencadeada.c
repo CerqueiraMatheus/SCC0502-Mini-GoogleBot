@@ -59,22 +59,22 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
         char *insertionString = site_ler_linha(inputFile);
         //Recebe a string até a próxima vírgula
         char *pch;
-        char aux_name[50];
+        
+        char *aux_name = malloc(200);
         pch = strtok(insertionString, ",");
-
         do {
             // Caso não seja um número
             if ((i != 0) && (i != 2)) {
-                strncpy(aux_name, pch - 1, strlen(pch) + 1);
-                aux_name[strlen(pch) + 1] = '\0';
+            	char *auxiliar = malloc(200);
+                strncpy(auxiliar, pch - 1, strlen(pch) + 1);
+                auxiliar[strlen(pch) + 1] = '\0';
+                aux_name = auxiliar;
             }
-
             switch (i) {
                 // Caso 0: código
                 case 0:
                     site_set_codigo(site, atoi(pch));
                     break;
-
                 // Caso 1: nome
                 case 1:
                     site_set_nome(site, aux_name);
