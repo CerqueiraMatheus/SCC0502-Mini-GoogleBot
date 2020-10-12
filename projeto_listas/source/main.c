@@ -14,14 +14,14 @@ int main() {
 
     LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
 
-    SITE *site;
+    SITE *site = site_criar();
     int codigo;
-    char *nome;
+    char *nome = malloc(200);
     int relevancia;
-    char *link;
-    char *auxname;
+    char *link = malloc(200);
+    char *auxname = malloc(200);
     PCHAVE *pchave;
-    LISTA_PCHAVE *l;
+    LISTA_PCHAVE *l = lista_pchave_criar();
 
     int escolha = 0;
     printf("=====MENU=====\n");
@@ -37,20 +37,20 @@ int main() {
         switch (escolha) {
             case 1:
                 //pegar informações
-                site = site_criar();
                 scanf("%d", &codigo);
                 scanf("%s", nome);
                 scanf("%d", &relevancia);
                 scanf("%s", link);
                 scanf("%s", auxname);
                 pchave = pchave_criar(auxname);
+                site_set_palavras_chave(site, l);
                 site_set_codigo(site, codigo);
                 site_set_nome(site, nome);
                 site_set_relevancia(site, relevancia);
                 site_set_link(site, link);
                 lista_pchave_inserir(l, pchave);
-                site_set_palavras_chave(site, l);
                 lista_inserir_encadeada(lista_sites, site);
+                site_imprimir(site);
                 break;
             case 2:
                 scanf("%d", &codigo);
