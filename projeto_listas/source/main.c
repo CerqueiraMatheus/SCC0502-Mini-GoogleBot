@@ -1,84 +1,148 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "listaencadeada.h"
-#include "site.h"
 #include "lista_pchave.h"
+#include "listaencadeada.h"
+#include "pchave.h"
+#include "site.h"
+#include "utils.h"
 
-#define TRUE 1
-#define FALSE 0
+void imprime_menu() {
+    printf("\n==============MENU==============\n");
+    printf("OPÇÃO \tDESCRIÇÃO\n");
+    printf("1 \tInserir um site\n");
+    printf("2 \tRemover um site\n");
+    printf("3 \tInserir palavra-chave\n");
+    printf("4 \tAtualizar relevância\n");
+    printf("5 \tSair\n");
+    printf("================================\n\n");
+}
+
+void inserir_site(LISTA *lista_sites) {
+    printf("\n==========INSERIR SITE==========\n");
+
+    // Cria o site
+    SITE *site = site_criar_completo();
+    lista_inserir_encadeada(lista_sites, site);
+
+    // Exibe a lista atualizada
+    lista_imprimir_encadeada(lista_sites);
+
+    printf("================================\n\n");
+}
+
+void remover_site(LISTA *lista_sites) {
+    printf("\n==========REMOVER SITE==========\n");
+
+    // Recebe o código do site
+    int codigo;
+    printf("Digite o código do site:\n");
+    scanf("%d", &codigo);
+
+    // Tenta remover o site
+    if (!lista_remover_site_encadeada(lista_sites, codigo))
+        printf("Código inexistente. Não foi possível apagar o site!\n");
+
+    // Imprime a nova lista
+    lista_imprimir_encadeada(lista_sites);
+
+    printf("================================\n\n");
+}
+
+void inserir_palavra_chave(LISTA *lista_sites) {
+    printf("\n=====INSERIR PALAVRA-CHAVE======\n");
+
+    // Recebe o código do site
+    int codigo;
+    printf("Digite o código do site:\n");
+    scanf("%d", &codigo);
+
+    // Busca o site
+    SITE *site = lista_busca_encadeada(lista_sites, codigo);
+
+    // Se existir, recebe e insere a nova palavra-chave
+    if (site != NULL) {
+        printf("Digite a nova palavra-chave:\n");
+        char *auxiliar = ler_linha(stdin);
+        PCHAVE *pchave = pchave_criar(auxiliar);
+        lista_pchave_inserir(site_get_palavras_chave(site), pchave);
+    } else
+        printf("Site não encontrado. Não é possível inserir palavra-chave!\n");
+
+    // Imprime a lista atualizada
+    lista_imprimir_encadeada(lista_sites);
+
+    printf("================================\n\n");
+}
+
+void atualizar_relevancia(LISTA *lista_sites) {
+    printf("\n======ATUALIZAR RELEVÂNCIA======\n");
+
+    // Recebe o código do site
+    int codigo;
+    printf("Digite o código do site:\n");
+    scanf("%d", &codigo);
+
+    // Busca o site
+    SITE *site = lista_busca_encadeada(lista_sites, codigo);
+
+    // Se o site existir, recebe e atribui a nova relevância
+    if (site != NULL) {
+        int relevancia;
+        printf("Digite a nova relevância:\n");
+        scanf("%d", &relevancia);
+        site_set_relevancia(site, relevancia);
+    } else
+        printf("Site inexistente. Impossível atualizar relevância!\n");
+
+    // Imprime a nova lista
+    lista_imprimir_encadeada(lista_sites);
+
+    printf("================================\n\n");
+}
 
 int main() {
+    FILE *arquivo_entrada = NULL;
+    LISTA *lista_sites = NULL;
+    int codigo, escolha = 0;
+
     //fazer a leitura do arquivo googlebot.txt
-    FILE *fp = fopen("googlebot.txt", "r");
+    arquivo_entrada = fopen("googlebot.txt", "r");
 
     //ler o arquivo de texto e adicionar os sites lidos em uma lista
-    LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
-
-    //declaração de variáveis
-    SITE *site;
-    int codigo;
-    int relevancia;
-    char *auxname = malloc(200);
-    PCHAVE *pchave;
-    LISTA_PCHAVE *l = lista_pchave_criar();
-
-    int flag = 1;
-
-    int escolha = 0;
-    printf("=====MENU=====\n");
-    printf("1. Inserir um site\n");
-    printf("2. Remover um site\n");
-    printf("3. Inserir palavra-chave\n");
-    printf("4. Atualizar relevância\n");
-    printf("5. Sair\n");
+    lista_sites = lista_criar_encadeada_ler_csv(arquivo_entrada);
 
     while (escolha != 5) {
+        imprime_menu();
         printf("Digite sua escolha:\n");
         scanf("%d", &escolha);
+        limpa_entrada(stdin);
+
         switch (escolha) {
-            //Inserir um site
             case 1:
-                //pegar informações
-                site = site_criar_completo();
-                lista_inserir_encadeada(lista_sites, site);
-                lista_imprimir_encadeada(lista_sites);
+                inserir_site(lista_sites);
                 break;
-            //Remover um site
+
             case 2:
-                printf("Digite o código do site:\n");
-                scanf("%d", &codigo);
-                flag = lista_remover_site_encadeada(lista_sites, codigo);
-                if(flag == 0)
-                    printf("código inexistente, não foi possível apagar o site\n");
-                lista_imprimir_encadeada(lista_sites);
+                remover_site(lista_sites);
                 break;
-            //Inserir palavra-chave
+
             case 3:
-                printf("Digite o código do site:\n");
-                scanf("%d", &codigo);
-                site = lista_busca_encadeada(lista_sites, codigo);
-                printf("Digite a nova palavra-chave:\n");
-                scanf("%s", auxname);
-                pchave = pchave_criar(auxname);
-                lista_pchave_inserir(site_get_palavras_chave(site), pchave);
-                lista_imprimir_encadeada(lista_sites);
+                inserir_palavra_chave(lista_sites);
                 break;
-            //Atualizar relevância
+
             case 4:
-                printf("Digite o código do site:\n");
-                scanf("%d", &codigo);
-                site = lista_busca_encadeada(lista_sites, codigo);
-                printf("Digite a nova relevância:\n");
-                scanf("%d", &relevancia);
-                site_set_relevancia(site, relevancia);
-                lista_imprimir_encadeada(lista_sites);
+                atualizar_relevancia(lista_sites);
                 break;
-            //Sair
+
             default:
                 printf("Programa terminado\n");
+                break;
         }
     }
 
-    return 0;
+    lista_apagar_encadeada(&lista_sites);
+
+    return EXIT_SUCCESS;
 }
