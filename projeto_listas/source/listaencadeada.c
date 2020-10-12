@@ -54,7 +54,8 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
     while (!feof(inputFile)) {
     	SITE *site = site_criar();
         PCHAVE *pchave;
-    	LISTA_PCHAVE *l;
+    	LISTA_PCHAVE *l = lista_pchave_criar();
+
         // Inicializa o contador de linhas
         int i = 0;
 
