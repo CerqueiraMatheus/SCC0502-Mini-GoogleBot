@@ -102,10 +102,10 @@ LISTA *lista_criar_encadeada_ler_csv(FILE *inputFile) {
             i++;
         } while (pch != NULL);
         pos++;
-        //site_imprimir(site);
+        site_imprimir(site);
         lista_inserir_encadeada(lista_sites, site);
     }
-    //lista_imprimir_encadeada(lista_sites);
+    lista_imprimir_encadeada(lista_sites);
     return lista_sites;
 }
 
@@ -270,7 +270,6 @@ boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 			if(p == lista->inicio) { /*se a chave está no 1o nó (Exceção a ser tratada!)*/
 				lista->inicio = p->proximo;
 				p->proximo = NULL;
-				free(p);
 				lista->tamanho--; free(p); return (TRUE);
 			}
 			else if(p == lista->fim){
@@ -278,11 +277,10 @@ boolean lista_remover_site_encadeada(LISTA *lista, int chave) {
 				lista->fim = aux;
 				lista->tamanho--; free(p); return (TRUE);
 			}
-			else {
+			else{
 				aux->proximo = p->proximo;
 				p->proximo = NULL;
 				free(p);
-				lista->tamanho--; free(p); return (TRUE);
 			}
 		}
 		return (FALSE);

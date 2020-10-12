@@ -14,7 +14,7 @@ int main() {
 
     LISTA *lista_sites = lista_criar_encadeada_ler_csv(fp);
 
-    lista_imprimir_encadeada(lista_sites);
+    //lista_imprimir_encadeada(lista_sites);
 
     SITE *site = site_criar();
     int codigo;
