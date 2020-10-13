@@ -24,7 +24,10 @@ void inserir_site(LISTA *lista_sites) {
 
     // Cria o site
     SITE *site = site_criar_completo();
-    lista_inserir_encadeada(lista_sites, site);
+    if (!lista_inserir_encadeada(lista_sites, site)) {
+        printf("Erro! Código já existente!\n");
+        site_apagar(&site);
+    }
 
     // Exibe a lista atualizada
     lista_imprimir_encadeada(lista_sites);
@@ -64,11 +67,29 @@ void inserir_palavra_chave(LISTA *lista_sites) {
     // Se existir, recebe e insere a nova palavra-chave
     if (site != NULL) {
         printf("Digite a nova palavra-chave:\n");
-        char *auxiliar = ler_linha(stdin);
-        PCHAVE *pchave = pchave_criar(auxiliar);
-        lista_pchave_inserir(site_get_palavras_chave(site), pchave);
-    } else
+
+        char *auxiliar = NULL;
+        do {
+            limpa_entrada(stdin);
+            auxiliar = ler_linha(stdin, LIMITE_STRING);
+
+            if (auxiliar != NULL) {
+                PCHAVE *pchave = pchave_criar(auxiliar);
+
+                if (lista_pchave_inserir(site_get_palavras_chave(site), pchave) == FALSE) {
+                    printf("Lista de palavras-chave cheia!\n");
+                    pchave_apagar(&pchave);
+                }
+
+            } else {
+                printf("Palavra-chave estoura o limite. Insira novamente:\n");
+            }
+        } while (auxiliar == NULL);
+
+    } else {
         printf("Site não encontrado. Não é possível inserir palavra-chave!\n");
+        site_apagar(&site);
+    }
 
     // Imprime a lista atualizada
     lista_imprimir_encadeada(lista_sites);
@@ -143,6 +164,7 @@ int main() {
     }
 
     lista_apagar_encadeada(&lista_sites);
+    fclose(arquivo_entrada);
 
     return EXIT_SUCCESS;
 }

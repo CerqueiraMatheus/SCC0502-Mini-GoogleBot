@@ -5,7 +5,7 @@
 #include <string.h>
 
 struct pchave_ {
-    char string[LIMITE_STRING];
+    char *string;
 };
 
 // Cria palavra-chave
@@ -14,7 +14,9 @@ PCHAVE *pchave_criar(char *string) {
     pchave = (PCHAVE *)malloc(sizeof(PCHAVE));
 
     if (pchave != NULL && (strlen(string) <= LIMITE_STRING)) {
-        strcpy(pchave->string, string);
+        pchave->string = string;
+    } else {
+        free(string);
     }
 
     return pchave;
@@ -22,7 +24,8 @@ PCHAVE *pchave_criar(char *string) {
 
 // Apaga uma palavra-chave a partir de seu endereço
 boolean pchave_apagar(PCHAVE **pchave) {
-    if (*pchave) {
+    if (*pchave != NULL) {
+        free((*pchave)->string);
         free(*pchave);
         *pchave = NULL;
         return TRUE;
