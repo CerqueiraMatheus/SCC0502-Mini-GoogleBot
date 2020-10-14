@@ -3,15 +3,21 @@
 
 #include "pchave.h"
 
+// Limite de palavras-chave
 #define LIMITE_PALAVRAS 10
 
+// Para usar booleanos
 #define TRUE 1
 #define FALSE 0
 #define boolean int
 
+// Define código de erro
 #define ERRO -32000
+
+// Opcional: caso queira que a lista seja ordenada
 #define ORDENADA 1
 
+// TAD da lista de p_chave
 typedef struct lista_pchave_ LISTA_PCHAVE;
 
 LISTA_PCHAVE *lista_pchave_criar(void);
