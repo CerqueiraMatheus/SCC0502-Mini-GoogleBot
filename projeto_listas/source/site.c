@@ -18,13 +18,10 @@ struct site_ {
 SITE *site_criar_completo() {
     SITE *site = NULL;
     PCHAVE *pchave;
-    LISTA_PCHAVE *lista_pchave;
     char *nome = NULL, *auxiliar = NULL, *link = NULL;
     int codigo, relevancia;
 
     site = site_criar();
-    lista_pchave = lista_pchave_criar();
-
     // leitura de variáveis
     printf("Digite o código do site:\n");
     scanf("%d", &codigo);
@@ -40,7 +37,6 @@ SITE *site_criar_completo() {
     limpa_entrada(stdin);
     link = ler_linha(stdin, LIMITE_PAGINA_PRINCIPAL);
 
-    site_set_palavras_chave(site, lista_pchave);
     site_set_codigo(site, codigo);
     site_set_nome(site, nome);
     site_set_relevancia(site, relevancia);
