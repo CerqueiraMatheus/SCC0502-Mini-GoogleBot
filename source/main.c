@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "lista_pchave.h"
-#include "listaencadeada.h"
+#include "lista_site.h"
 #include "pchave.h"
 #include "site.h"
 #include "utils.h"

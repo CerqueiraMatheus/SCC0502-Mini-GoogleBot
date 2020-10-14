@@ -1,5 +1,5 @@
-#ifndef LISTA_H
-#define LISTA_H
+#ifndef LISTA_SITE_H
+#define LISTA_SITE_H
 
 #define TAM_MAX 100 /*estimativa do tamanho máximo da lista*/
 #define TRUE 1
