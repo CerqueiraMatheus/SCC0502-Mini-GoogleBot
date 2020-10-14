@@ -20,6 +20,7 @@ LISTA_PCHAVE *lista_pchave_criar() {
         lista->inicio = 0;
         lista->fim = 0;
     }
+
     return lista;
 }
 
