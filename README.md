@@ -28,13 +28,14 @@ O arquivo principal é o main.c. Sob a pasta "include" estão todas as interface
 
 ## Justificativas para as implementações escolhidas para as estruturas e de seus métodos
 
-- Utilizamos dois TADs para site e palavra-chave, a fim de restringir as informações possíveis e "concentrar" as operações.
+- Utilizamos dois TADs para site, (com inserir, remover,configurar lista de palavras-chave e alterar relevância) e palavra-chave (com inserir, remover e configurar string), a fim de restringir as informações possíveis e "concentrar" as operações.
 - Utilizamos o TAD de lista sequencial para a lista de palavras chave de cada site pois, de acordo com o enunciado do problema, o número máximo de elementos dessa lista é 10, um valor imutável.
-- Utilizamos o TAD de lista encadeada para a lista de sites. O número de sites é mutável, podendo-se facilmente aumentar ou diminuir de acordo com a necessidade do usuário.
+- Utilizamos o TAD de lista encadeada para a lista de sites. O número de sites é mutável, podendo-se facilmente aumentar ou diminuir de acordo com a necessidade do usuário. Adicionamos uma função para que fosse possível ler diretamente um .csv.
 - Ambos os TADs para as listas têm a opção "ordenada", uma vez que esta não foi especificada no problema.
 
 ## Funções externas
 
+- No arquivo main são usadas quatro funções (imprimir menu, inserir site, remover site e atualizar relevância) que não são pertinentes aos TAD. As três últimas são utilizações das funções dos TADs desenvolvidos.
 - Criamos um arquivo utils (com interface) para ler linhas e limpar o stdin. Foi necessário, uma vez que a operação se repete entre os TADs.
 
 ## Funções extras
