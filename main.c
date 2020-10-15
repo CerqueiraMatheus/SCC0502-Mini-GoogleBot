@@ -168,11 +168,11 @@ int main() {
                 break;
 
             default:
-                printf("\nPrograma terminado\n");
                 break;
         }
     }
 
+    printf("\nPrograma terminado\n");
     lista_site_apagar(&lista_sites);
     fclose(arquivo_entrada);
 

@@ -358,18 +358,16 @@ void lista_site_apagar_recursivamente(LISTA_SITE **lista, NO *atual) {
 
     // Remove o site
     lista_site_remover(*lista, site_get_codigo(atual->site));
-
-    // Se o tamanho for 0, libera a lista
-    if ((*lista)->tamanho == 0) {
-        free(*lista);
-        *lista = NULL;
-    }
 }
 
 // Apaga a lista completamente a partir de seu endereço
 void lista_site_apagar(LISTA_SITE **lista) {
-    if (*lista != NULL)
-        lista_site_apagar_recursivamente(lista, (*lista)->inicio);
+    if (*lista != NULL) {
+        if ((*lista)->tamanho != 0)
+            lista_site_apagar_recursivamente(lista, (*lista)->inicio);
+        free(*lista);
+        *lista = NULL;
+    }
 }
 
 //inverte os nós da lista
