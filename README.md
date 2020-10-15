@@ -22,16 +22,26 @@ GCC
 
 - Digite os dados do site conforme o que for pedido na programa.
 
-## Justificativas para as escolhas das estruturas
+## Para ler o código
 
-- Escolhemos utilizar o TAD (Tipo Abstrato de Dados) pois, nessa aplicação queremos que o usuário só "enxergue” a interface, não a implementação.
+O arquivo principal é o main.c. Sob a pasta "include" estão todas as interfaces comentadas (exceto suas funções). Sob a pasta "source", encontram-se os códigos-fonte, com as funções devidamente comentadas.
 
 ## Justificativas para as implementações escolhidas para as estruturas e de seus métodos
 
-- Utilizamos o TAD de lista sequencial para a lista de palavras chave de cada site pois, de acordo com o enuciado do problema, o número máximo de elementos dessa lista é 10, um valor imutável.
-- Utilizamos o TAD de lista encadeada para a lista de sites. O número de sites é mutável, podendo-se facilmente aumentar ou diminuir de acordo com a necessidade do uśuário. 
+- Utilizamos dois TADs para site e palavra-chave, a fim de restringir as informações possíveis e "concentrar" as operações.
+- Utilizamos o TAD de lista sequencial para a lista de palavras chave de cada site pois, de acordo com o enunciado do problema, o número máximo de elementos dessa lista é 10, um valor imutável.
+- Utilizamos o TAD de lista encadeada para a lista de sites. O número de sites é mutável, podendo-se facilmente aumentar ou diminuir de acordo com a necessidade do usuário.
+- Ambos os TADs para as listas têm a opção "ordenada", uma vez que esta não foi especificada no problema.
+
+## Funções externas
+
+- Criamos um arquivo utils (com interface) para ler linhas e limpar o stdin. Foi necessário, uma vez que a operação se repete entre os TADs.
+
+## Funções extras
+
+Os TADs criados apresentam funções extras (conforme descritas no .h), que podem, em futuras implementações, serem úteis, bem como inversão, busca e comparação.
 
 ## Integrantes
 
-- Matheus Henrique de Cerqueira Pinto
-- Raíssa Torres Barreira
+- Matheus Henrique de Cerqueira Pinto (nUSP: 11911104)
+- Raíssa Torres Barreira (nUSP: 11796336)
