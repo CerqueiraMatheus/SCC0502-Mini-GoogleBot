@@ -29,7 +29,6 @@ char *ler_linha(FILE *entrada, int tamanho_maximo) {
     if (estouro_tamanho) {
         free(string);
         string = NULL;
-
         return NULL;
     } else {
         return string;
@@ -40,7 +39,8 @@ char *ler_linha(FILE *entrada, int tamanho_maximo) {
 void limpa_entrada(FILE *entrada) {
     int c;
 
-    //Consome todos os caracteres de stdin
-    while (((c = fgetc(entrada)) != '\n') && (c != EOF))
-        ;
+    if (entrada != NULL) {
+        //Consome todos os caracteres de stdin
+        while (((c = fgetc(entrada)) != '\n') && (c != EOF));
+    }
 }

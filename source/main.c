@@ -19,23 +19,29 @@ void imprime_menu() {
     printf("================================\n\n");
 }
 
-void inserir_site(LISTA *lista_sites) {
+void inserir_site(LISTA_SITE *lista_sites) {
     printf("\n==========INSERIR SITE==========\n");
 
     // Cria o site
     SITE *site = site_criar_completo();
-    if (!lista_inserir_encadeada(lista_sites, site)) {
-        printf("Erro! Código já existente!\n");
-        site_apagar(&site);
+
+    if (site != NULL) {
+        if (!lista_site_inserir(lista_sites, site)) {
+            printf("Erro! Código já existente!\n");
+            site_apagar(&site);
+        }
+    } else {
+        printf("Erro! Verifique o tamanho do código, nome, link ou relevância do site!\n");
+        limpa_entrada(stdin);
     }
 
     // Exibe a lista atualizada
-    lista_imprimir_encadeada(lista_sites);
+    lista_site_imprimir(lista_sites);
 
     printf("================================\n\n");
 }
 
-void remover_site(LISTA *lista_sites) {
+void remover_site(LISTA_SITE *lista_sites) {
     printf("\n==========REMOVER SITE==========\n");
 
     // Recebe o código do site
@@ -44,25 +50,26 @@ void remover_site(LISTA *lista_sites) {
     scanf("%d", &codigo);
 
     // Tenta remover o site
-    if (!lista_remover_site_encadeada(lista_sites, codigo))
+    if (!lista_site_remover(lista_sites, codigo))
         printf("Código inexistente. Não foi possível apagar o site!\n");
 
     // Imprime a nova lista
-    lista_imprimir_encadeada(lista_sites);
+    lista_site_imprimir(lista_sites);
 
     printf("================================\n\n");
 }
 
-void inserir_palavra_chave(LISTA *lista_sites) {
+void inserir_palavra_chave(LISTA_SITE *lista_sites) {
     printf("\n=====INSERIR PALAVRA-CHAVE======\n");
 
     // Recebe o código do site
     int codigo;
     printf("Digite o código do site:\n");
     scanf("%d", &codigo);
+    printf("\n");
 
     // Busca o site
-    SITE *site = lista_busca_encadeada(lista_sites, codigo);
+    SITE *site = lista_site_buscar(lista_sites, codigo);
 
     // Se existir, recebe e insere a nova palavra-chave
     if (site != NULL) {
@@ -72,6 +79,7 @@ void inserir_palavra_chave(LISTA *lista_sites) {
         do {
             limpa_entrada(stdin);
             auxiliar = ler_linha(stdin, LIMITE_STRING);
+            printf("\n");
 
             if (auxiliar != NULL) {
                 PCHAVE *pchave = pchave_criar(auxiliar);
@@ -92,47 +100,49 @@ void inserir_palavra_chave(LISTA *lista_sites) {
     }
 
     // Imprime a lista atualizada
-    lista_imprimir_encadeada(lista_sites);
+    lista_site_imprimir(lista_sites);
 
     printf("================================\n\n");
 }
 
-void atualizar_relevancia(LISTA *lista_sites) {
+void atualizar_relevancia(LISTA_SITE *lista_sites) {
     printf("\n======ATUALIZAR RELEVÂNCIA======\n");
 
     // Recebe o código do site
     int codigo;
     printf("Digite o código do site:\n");
     scanf("%d", &codigo);
+    printf("\n");
 
     // Busca o site
-    SITE *site = lista_busca_encadeada(lista_sites, codigo);
+    SITE *site = lista_site_buscar(lista_sites, codigo);
 
     // Se o site existir, recebe e atribui a nova relevância
     if (site != NULL) {
         int relevancia;
         printf("Digite a nova relevância:\n");
         scanf("%d", &relevancia);
+        printf("\n");
         site_set_relevancia(site, relevancia);
     } else
         printf("Site inexistente. Impossível atualizar relevância!\n");
 
     // Imprime a nova lista
-    lista_imprimir_encadeada(lista_sites);
+    lista_site_imprimir(lista_sites);
 
     printf("================================\n\n");
 }
 
 int main() {
     FILE *arquivo_entrada = NULL;
-    LISTA *lista_sites = NULL;
+    LISTA_SITE *lista_sites = NULL;
     int codigo, escolha = 0;
 
     //fazer a leitura do arquivo googlebot.txt
     arquivo_entrada = fopen("googlebot.txt", "r");
 
     //ler o arquivo de texto e adicionar os sites lidos em uma lista
-    lista_sites = lista_criar_encadeada_ler_csv(arquivo_entrada);
+    lista_sites = lista_site_ler_csv(arquivo_entrada);
 
     while (escolha != 5) {
         imprime_menu();
@@ -158,12 +168,12 @@ int main() {
                 break;
 
             default:
-                printf("Programa terminado\n");
+                printf("\nPrograma terminado\n");
                 break;
         }
     }
 
-    lista_apagar_encadeada(&lista_sites);
+    lista_site_apagar(&lista_sites);
     fclose(arquivo_entrada);
 
     return EXIT_SUCCESS;

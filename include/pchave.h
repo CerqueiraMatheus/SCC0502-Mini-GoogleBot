@@ -1,6 +1,7 @@
 #ifndef PCHAVE_H
 #define PCHAVE_H
 
+// Para usar booleanos
 #define TRUE 1
 #define FALSE 0
 #define boolean int

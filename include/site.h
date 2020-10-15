@@ -1,12 +1,21 @@
 #ifndef SITE_H
 #define SITE_H
 
+#include "lista_pchave.h"
+
+// Para usar booleanos
 #define TRUE 1
 #define FALSE 0
 #define boolean int
-#define LIMITE_PAGINA_PRINCIPAL 100
 
-#include "lista_pchave.h"
+// Define o limite para código
+#define LIMITE_CODIGO 9999
+
+// Define o limite do link
+#define LIMITE_LINK 100
+
+// Define o limite para relevância
+#define LIMITE_RELEVANCIA 1000
 
 typedef struct site_ SITE;
 

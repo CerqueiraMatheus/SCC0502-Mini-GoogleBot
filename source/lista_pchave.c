@@ -12,7 +12,7 @@ struct lista_pchave_ {
     int fim;
 };
 
-// Retorna uma lista
+// Retorna uma lista de p_chave
 LISTA_PCHAVE *lista_pchave_criar() {
     LISTA_PCHAVE *lista = (LISTA_PCHAVE *)malloc(sizeof(LISTA_PCHAVE));
 
@@ -44,51 +44,51 @@ boolean lista_checa_strings(char *s1, char *s2) {
 }
 
 // Para inserir de acordo com a posição
-boolean lista_inserir_posicao(LISTA_PCHAVE *l, PCHAVE *pchave, int posicao) {
-    for (int i = (l->fim); i > posicao; i--)
-        l->lista[i] = l->lista[i - 1];
+boolean lista_inserir_posicao(LISTA_PCHAVE *lista, PCHAVE *pchave, int posicao) {
+    for (int i = (lista->fim); i > posicao; i--)
+        lista->lista[i] = lista->lista[i - 1];
 
-    l->lista[posicao] = pchave;
-    l->fim++;
+    lista->lista[posicao] = pchave;
+    lista->fim++;
     return TRUE;
 }
 
 //Insere uma palavra-chave ordenadamente
-boolean lista_inserir_ordenado(LISTA_PCHAVE *l, PCHAVE *pchave) {
+boolean lista_inserir_ordenado(LISTA_PCHAVE *lista, PCHAVE *pchave) {
     // Caso 1: lista vazia
-    if (lista_pchave_tamanho(l) == 0)
-        return lista_inserir_posicao(l, pchave, 0);
+    if (lista_pchave_tamanho(lista) == 0)
+        return lista_inserir_posicao(lista, pchave, 0);
 
     // Caso 2: no meio da lista
-    for (int i = l->inicio; i < l->fim; i++) {
-        if (lista_checa_strings(pchave_get_string(l->lista[i]),
+    for (int i = lista->inicio; i < lista->fim; i++) {
+        if (lista_checa_strings(pchave_get_string(lista->lista[i]),
                                 pchave_get_string(pchave))) {
-            return lista_inserir_posicao(l, pchave, i);
+            return lista_inserir_posicao(lista, pchave, i);
         }
     }
 
     // Caso 3: no final da lista
-    return lista_inserir_posicao(l, pchave, l->fim);
+    return lista_inserir_posicao(lista, pchave, lista->fim);
 }
 
 // Insere um item na lista
-boolean lista_pchave_inserir(LISTA_PCHAVE *l, PCHAVE *pchave) {
-    if (l != NULL && !lista_pchave_cheia(l)) {
+boolean lista_pchave_inserir(LISTA_PCHAVE *lista, PCHAVE *pchave) {
+    if (lista != NULL && !lista_pchave_cheia(lista)) {
         if (!ORDENADA) {
-            l->lista[l->fim] = pchave;
-            l->fim += 1;
+            lista->lista[lista->fim] = pchave;
+            lista->fim += 1;
             return TRUE;
         } else {
-            return lista_inserir_ordenado(l, pchave);
+            return lista_inserir_ordenado(lista, pchave);
         }
     }
     return FALSE;
 }
 
 // Busca para lista não ordenada
-int lista_busca_sequencial(LISTA_PCHAVE *l, char *string) {
-    for (int i = 0; i < l->fim; i++)
-        if (!strcmp(pchave_get_string(l->lista[i]), string))
+int lista_busca_sequencial(LISTA_PCHAVE *lista, char *string) {
+    for (int i = 0; i < lista->fim; i++)
+        if (!strcmp(pchave_get_string(lista->lista[i]), string))
             return i;
     return ERRO;
 }
@@ -114,8 +114,8 @@ int lista_busca_binaria(PCHAVE **lista, int inicio, int fim, char *string) {
 }
 
 // Busca para lista ordenada
-int lista_busca_ordenada(LISTA_PCHAVE *l, char *string) {
-    return lista_busca_binaria(l->lista, l->inicio, l->fim, string);
+int lista_busca_ordenada(LISTA_PCHAVE *lista, char *string) {
+    return lista_busca_binaria(lista->lista, lista->inicio, lista->fim, string);
 }
 
 // Procura um item na lista a partir de sua chave
@@ -178,8 +178,9 @@ int lista_pchave_tamanho(LISTA_PCHAVE *lista) {
 
 // Imprime a lista
 void lista_pchave_imprimir(LISTA_PCHAVE *l) {
+    printf("\tPalavras-chave:\n");
     for (int i = l->inicio; i < l->fim; i++) {
-        printf("[%s] ", pchave_get_string(l->lista[i]));
+        printf("\t\t[%s]\n", pchave_get_string(l->lista[i]));
     }
     printf("\n");
 }
