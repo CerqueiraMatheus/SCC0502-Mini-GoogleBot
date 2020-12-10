@@ -14,57 +14,6 @@ struct site_ {
     LISTA_PCHAVE *palavras_chave;
 };
 
-// Lê as informações do stdin e cria um novo site completo a partir delas
-// Retorna um site
-SITE *site_criar_completo() {
-    SITE *site = NULL;
-    PCHAVE *pchave;
-    char *nome = NULL, *auxiliar = NULL, *link = NULL;
-    int codigo, relevancia;
-
-    site = site_criar();
-
-    printf("Digite o código do site:\n");
-    scanf("%d", &codigo);
-    printf("\n");
-
-    // Caso o código esteja dentro do limite
-    if (codigo <= LIMITE_CODIGO && codigo >= 0) {
-        printf("Digite o nome do site:\n");
-        limpa_entrada(stdin);
-        nome = ler_linha(stdin, LIMITE_STRING);
-        printf("\n");
-
-        // Caso o nome esteja no limite da string
-        if (nome != NULL) {
-            printf("Digite a revelância do site:\n");
-            scanf("%d", &relevancia);
-            printf("\n");
-
-            // Caso a relevância esteja dentro do limite
-            if (relevancia <= LIMITE_RELEVANCIA && relevancia >= 0) {
-                printf("Digite o link do site:\n");
-                limpa_entrada(stdin);
-                link = ler_linha(stdin, LIMITE_LINK);
-                printf("\n");
-
-                // Caso o nome esteja no link da string
-                if (link != NULL) {
-                    site_set_codigo(site, codigo);
-                    site_set_nome(site, nome);
-                    site_set_relevancia(site, relevancia);
-                    site_set_link(site, link);
-
-                    return site;
-                }
-            }
-        }
-    }
-
-    site_apagar(&site);
-    return NULL;
-}
-
 // Cria um novo site em branco
 SITE *site_criar() {
     SITE *site = (SITE *)malloc(sizeof(SITE));
