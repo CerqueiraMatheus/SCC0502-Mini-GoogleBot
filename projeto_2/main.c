@@ -7,14 +7,14 @@
 
 int main() {
     FILE *arquivo_entrada = NULL;
-    LISTA_SITE *lista_sites = NULL;
+    AVL *lista_sites = NULL;
     int codigo, escolha = 0;
 
     //fazer a leitura do arquivo googlebot.txt
     arquivo_entrada = fopen("googlebot.txt", "r");
 
     //ler o arquivo de texto e adicionar os sites lidos em uma lista
-    lista_sites = lista_site_ler_csv(arquivo_entrada);
+    lista_sites = avl_site_ler_csv(arquivo_entrada);
 
     while (escolha != 5) {
         imprime_menu();
@@ -45,7 +45,7 @@ int main() {
     }
 
     printf("\nPrograma terminado\n");
-    lista_site_apagar(&lista_sites);
+    avl_apagar(&lista_sites);
     fclose(arquivo_entrada);
 
     return EXIT_SUCCESS;
