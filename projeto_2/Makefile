@@ -1,8 +1,8 @@
 CC=gcc
 INCLUDES=./include/
-SOURCES=./source/site.c ./source/pchave.c ./source/lista_pchave.c ./source/avl.c ./source/utils.c
+SOURCES=./source/site.c ./source/pchave.c ./source/lista_pchave.c ./source/lista_site.c ./source/utils.c ./source/prompt_usuario.c
 BINARY=./test
-PROG=./source/main.c
+PROG=./main.c
 
 all:
 	$(CC) -g -o $(BINARY) $(PROG) $(SOURCES) -I$(INCLUDES) 
