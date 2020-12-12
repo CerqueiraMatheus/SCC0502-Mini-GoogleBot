@@ -283,6 +283,8 @@ void avl_pchave_posordem(NO *raiz) {
 
 // Imprime a árvore seguindo o percurso escolhido
 void avl_pchave_imprimir(AVL_PCHAVE *arvore) {
+    printf("\t");
+
     if (PRE_ORDER)
         avl_pchave_preordem(arvore->raiz);
 
@@ -291,6 +293,8 @@ void avl_pchave_imprimir(AVL_PCHAVE *arvore) {
 
     if (POS_ORDER)
         avl_pchave_posordem(arvore->raiz);
+
+    printf("\n");
 }
 
 int avl_pchave_tamanho(AVL_PCHAVE *arvore) {

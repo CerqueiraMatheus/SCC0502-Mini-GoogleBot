@@ -36,7 +36,7 @@ boolean pchave_apagar(PCHAVE **pchave) {
 // Imprime os dados de uma palavra-chave
 void pchave_imprimir(PCHAVE *pchave) {
     if (pchave != NULL)
-        printf("--> item %s", pchave->string);
+        printf("[%s] ", pchave->string);
 }
 
 // Retorna a string de uma palavra-chave

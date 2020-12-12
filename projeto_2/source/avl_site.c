@@ -18,6 +18,7 @@ struct no {
 struct avl_site {
     NO *raiz;
     int profundidade;
+    int contador;
 };
 
 // Cria uma avl inicializando sua raiz como NULL e sua profundidade como -1
@@ -26,6 +27,7 @@ AVL_SITE *avl_site_criar() {
     if (arvore != NULL) {
         arvore->raiz = NULL;
         arvore->profundidade = -1;
+        arvore->contador = 0;
     }
     return arvore;
 }
@@ -155,6 +157,7 @@ boolean avl_site_inserir(AVL_SITE *arvore, SITE *site) {
 
     if (aux != NULL) {
         arvore->raiz = aux;
+        arvore->contador++;
         return TRUE;
     }
 
@@ -176,7 +179,7 @@ void avl_site_troca_max_esq(NO *troca, NO *raiz, NO *ant) {
     troca = NULL;
 }
 
-NO *avl_site_remover_aux(NO **raiz, int chave) {
+NO *avl_site_remover_aux(NO **raiz, int chave, boolean *aux) {
     NO *p;
     if (*raiz == NULL)
         return NULL;
@@ -187,18 +190,19 @@ NO *avl_site_remover_aux(NO **raiz, int chave) {
             *raiz = ((*raiz)->esq == NULL) ? ((*raiz)->dir) : ((*raiz)->esq);
             free(p);
             p = NULL;
+            *aux = TRUE;
         } else {
             avl_site_troca_max_esq((*raiz)->esq, (*raiz), (*raiz));
         }
     }
 
     else if (chave < site_get_codigo((*raiz)->site)) {
-        (*raiz)->esq = avl_site_remover_aux(&(*raiz)->esq, chave);
+        (*raiz)->esq = avl_site_remover_aux(&(*raiz)->esq, chave, aux);
         (*raiz)->altura = max(avl_site_altura_no((*raiz)->esq), avl_site_altura_no((*raiz)->dir)) + 1;
     }
 
     else if (chave > site_get_codigo((*raiz)->site)) {
-        (*raiz)->dir = avl_site_remover_aux(&(*raiz)->dir, chave);
+        (*raiz)->dir = avl_site_remover_aux(&(*raiz)->dir, chave, aux);
         (*raiz)->altura = max(avl_site_altura_no((*raiz)->esq), avl_site_altura_no((*raiz)->dir)) + 1;
     }
 
@@ -225,7 +229,15 @@ NO *avl_site_remover_aux(NO **raiz, int chave) {
 
 // Remove um nó a partir de sua chave, mas continua deixando a árvore final balanceada
 boolean avl_site_remover(AVL_SITE *arvore, int chave) {
-    return ((arvore->raiz = avl_site_remover_aux(&arvore->raiz, chave)) != NULL);
+    boolean removido = FALSE;
+    arvore->raiz = avl_site_remover_aux(&arvore->raiz, chave, &removido);
+
+    if (removido) {
+        arvore->contador--;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 SITE *avl_site_busca_no(NO *raiz, int chave) {
@@ -279,14 +291,18 @@ void avl_site_posordem(NO *raiz) {
 
 // Imprime a árvore seguindo o percurso escolhido
 void avl_site_imprimir(AVL_SITE *arvore) {
-    if (PRE_ORDER)
-        avl_site_preordem(arvore->raiz);
+    if (arvore->contador != 0) {
+        if (PRE_ORDER)
+            avl_site_preordem(arvore->raiz);
 
-    if (EM_ORDER)
-        avl_site_emordem(arvore->raiz);
+        if (EM_ORDER)
+            avl_site_emordem(arvore->raiz);
 
-    if (POS_ORDER)
-        avl_site_posordem(arvore->raiz);
+        if (POS_ORDER)
+            avl_site_posordem(arvore->raiz);
+    } else {
+        printf("Não há elementos na lista! :(\n");
+    }
 }
 
 // Lê um arquivo .csv
