@@ -16,7 +16,7 @@ int main() {
     //ler o arquivo de texto e adicionar os sites lidos em uma lista
     lista_sites = avl_site_ler_csv(arquivo_entrada);
 
-    while (escolha != 5) {
+    while (escolha != 7) {
         imprime_menu();
         printf("Digite sua escolha:\n");
         scanf("%d", &escolha);
@@ -37,6 +37,10 @@ int main() {
 
             case 4:
                 atualizar_relevancia(lista_sites);
+                break;
+
+            case 5:
+                busca_pchave(lista_sites);
                 break;
 
             default:

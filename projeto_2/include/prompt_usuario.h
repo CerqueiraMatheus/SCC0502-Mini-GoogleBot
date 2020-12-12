@@ -14,5 +14,6 @@ void inserir_site(AVL_SITE *lista_sites);
 void remover_site(AVL_SITE *lista_sites);
 void inserir_palavra_chave(AVL_SITE *lista_sites);
 void atualizar_relevancia(AVL_SITE *lista_sites);
+void busca_pchave(AVL_SITE *arvore);
 
 #endif

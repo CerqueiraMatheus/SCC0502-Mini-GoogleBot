@@ -91,7 +91,8 @@ void imprime_menu() {
     printf("2 \tRemover um site\n");
     printf("3 \tInserir palavra-chave\n");
     printf("4 \tAtualizar relevância\n");
-    printf("5 \tSair\n");
+    printf("5 \tBusca palavra-chave\n");
+    printf("7 \tSair\n");
     printf("================================\n\n");
 }
 
@@ -211,4 +212,20 @@ void atualizar_relevancia(AVL_SITE *lista_sites) {
     printf("\n================================\n\n");
     avl_site_imprimir(lista_sites);
     printf("================================\n\n");
+}
+
+void busca_pchave(AVL_SITE *arvore) {
+    printf("\n======BUSCAR PALAVRA-CHAVE=======\n");
+    printf("Digite a palavra-chave:\n");
+
+    char *auxiliar = ler_linha(stdin, LIMITE_STRING);
+    printf("\n");
+
+    LISTA_SITE *lista = avl_site_busca_pchave(arvore, auxiliar);
+
+    if (lista != NULL) {
+        lista_site_imprimir(lista);
+    } else {
+        printf("Nenhum site relevante encontrado\n");
+    }
 }

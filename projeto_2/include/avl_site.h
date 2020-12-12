@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "avl_pchave.h"
+#include "lista_site.h"
 #include "site.h"
 
 #define TRUE 1
@@ -26,5 +27,7 @@ boolean avl_site_remover(AVL_SITE *arvore, int chave);
 SITE *avl_site_busca(AVL_SITE *arvore, int chave);
 void avl_site_imprimir(AVL_SITE *T);
 AVL_SITE *avl_site_ler_csv(FILE *arquivo);
+
+LISTA_SITE *avl_site_busca_pchave(AVL_SITE *arvore, char *pchave);
 
 #endif

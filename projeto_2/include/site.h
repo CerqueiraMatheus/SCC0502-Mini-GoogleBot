@@ -32,6 +32,8 @@ boolean site_set_relevancia(SITE *site, int relevancia);
 boolean site_set_link(SITE *site, char *link);
 boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l);
 
+boolean site_checa_pchave(SITE *site, char *pchave);
+
 int site_get_relevancia(SITE *site);
 
 #endif

@@ -238,11 +238,11 @@ PCHAVE *avl_pchave_busca_no(NO *raiz, char *chave) {
         return NULL;
 
     // Caso 1: chave na posição atual
-    if (strcmp(chave, pchave_get_string(raiz->pchave)))
+    if (!strcmp(chave, pchave_get_string(raiz->pchave)))
         return (raiz->pchave);
 
     // Caso 2: chave na posição esquerda
-    if (checa_strings(chave, pchave_get_string(raiz->pchave)))
+    if (checa_strings(pchave_get_string(raiz->pchave), chave))
         return (avl_pchave_busca_no(raiz->esq, chave));
 
     // Caso 3: chave na posição direita

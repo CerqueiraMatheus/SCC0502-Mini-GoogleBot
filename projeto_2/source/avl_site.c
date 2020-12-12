@@ -390,3 +390,24 @@ AVL_SITE *avl_site_ler_csv(FILE *arquivo) {
 
     return avl;
 }
+
+void avl_site_busca_pchave_no(NO *raiz, char *pchave, LISTA_SITE **lista_site) {
+    if (raiz != NULL) {
+        avl_site_busca_pchave_no(raiz->esq, pchave, lista_site);
+
+        if (site_checa_pchave(raiz->site, pchave))
+            lista_site_inserir(*lista_site, raiz->site);
+
+        avl_site_busca_pchave_no(raiz->dir, pchave, lista_site);
+    }
+}
+
+LISTA_SITE *avl_site_busca_pchave(AVL_SITE *arvore, char *pchave) {
+    if (arvore != NULL) {
+        LISTA_SITE *lista_site = lista_site_criar();
+        avl_site_busca_pchave_no(arvore->raiz, pchave, &lista_site);
+        return lista_site;
+    }
+
+    return NULL;
+}

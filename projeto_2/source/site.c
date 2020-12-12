@@ -135,3 +135,11 @@ boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l) {
     }
     return (FALSE);
 }
+
+boolean site_checa_pchave(SITE *site, char *pchave) {
+    if (site != NULL) {
+        AVL_PCHAVE *avl_pchave = site_get_palavras_chave(site);
+        return avl_pchave_busca(avl_pchave, pchave) != NULL;
+    }
+    return FALSE;
+}

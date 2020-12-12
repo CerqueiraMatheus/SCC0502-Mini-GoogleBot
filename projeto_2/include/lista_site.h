@@ -32,7 +32,5 @@ boolean lista_site_vazia(LISTA_SITE *lista);
 boolean lista_site_cheia(LISTA_SITE *lista);
 
 void lista_site_imprimir(LISTA_SITE *lista);
-void lista_site_inverter(LISTA_SITE **lista);
-int lista_site_comparar(LISTA_SITE *l1, LISTA_SITE *l2);
 
 #endif
