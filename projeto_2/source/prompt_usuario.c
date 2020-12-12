@@ -228,4 +228,8 @@ void busca_pchave(AVL_SITE *arvore) {
     } else {
         printf("Nenhum site relevante encontrado\n");
     }
+
+    lista_site_apagar(&lista);
+
+    free(auxiliar);
 }

@@ -188,6 +188,7 @@ NO *avl_site_remover_aux(NO **raiz, int chave, boolean *aux) {
         if ((*raiz)->esq == NULL || (*raiz)->dir == NULL) {
             p = *raiz;
             *raiz = ((*raiz)->esq == NULL) ? ((*raiz)->dir) : ((*raiz)->esq);
+            site_apagar(&p->site);
             free(p);
             p = NULL;
             *aux = TRUE;

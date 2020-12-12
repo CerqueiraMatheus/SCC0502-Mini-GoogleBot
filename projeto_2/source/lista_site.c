@@ -213,7 +213,7 @@ boolean lista_site_remover(LISTA_SITE *lista, int codigo) {
                 lista->fim = no_anterior;
 
             // Remove o site e atualiza a lista
-            site_apagar(&(no_atual->site));
+            // site_apagar(&(no_atual->site));
             free(no_atual);
             lista->tamanho--;
 
