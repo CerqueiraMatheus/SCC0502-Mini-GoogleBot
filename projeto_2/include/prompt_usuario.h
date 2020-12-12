@@ -5,14 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "avl.h"
+#include "avl_site.h"
 #include "utils.h"
 
 SITE *site_criar_completo();
 void imprime_menu();
-void inserir_site(AVL *lista_sites);
-void remover_site(AVL *lista_sites);
-void inserir_palavra_chave(AVL *lista_sites);
-void atualizar_relevancia(AVL *lista_sites);
+void inserir_site(AVL_SITE *lista_sites);
+void remover_site(AVL_SITE *lista_sites);
+void inserir_palavra_chave(AVL_SITE *lista_sites);
+void atualizar_relevancia(AVL_SITE *lista_sites);
 
 #endif

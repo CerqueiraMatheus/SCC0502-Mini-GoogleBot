@@ -7,7 +7,7 @@
 
 int main() {
     FILE *arquivo_entrada = NULL;
-    AVL *lista_sites = NULL;
+    AVL_SITE *lista_sites = NULL;
     int codigo, escolha = 0;
 
     //fazer a leitura do arquivo googlebot.txt
@@ -45,7 +45,7 @@ int main() {
     }
 
     printf("\nPrograma terminado\n");
-    avl_apagar(&lista_sites);
+    avl_site_apagar(&lista_sites);
     fclose(arquivo_entrada);
 
     return EXIT_SUCCESS;

@@ -42,7 +42,7 @@ SITE *site_criar_completo() {
                     site_set_link(site, link);
 
                     boolean end = FALSE;
-                    LISTA_PCHAVE *lp = site_get_palavras_chave(site);
+                    AVL_PCHAVE *lp = site_get_palavras_chave(site);
                     printf("Insira uma palavra-chave:\n");
 
                     // Insere palavras-chave
@@ -54,7 +54,7 @@ SITE *site_criar_completo() {
                             if (auxiliar != NULL) {
                                 pchave = pchave_criar(auxiliar);
 
-                                if (lista_pchave_inserir(site_get_palavras_chave(site), pchave) == FALSE) {
+                                if (avl_pchave_inserir(site_get_palavras_chave(site), pchave) == FALSE) {
                                     printf("\nLista de palavras-chave cheia!\n");
                                     pchave_apagar(&pchave);
                                     end = TRUE;
@@ -95,14 +95,14 @@ void imprime_menu() {
     printf("================================\n\n");
 }
 
-void inserir_site(AVL *lista_sites) {
+void inserir_site(AVL_SITE *lista_sites) {
     printf("\n==========INSERIR SITE==========\n");
 
     // Cria o site
     SITE *site = site_criar_completo();
 
     if (site != NULL) {
-        if (!avl_inserir(lista_sites, site)) {
+        if (!avl_site_inserir(lista_sites, site)) {
             printf("\nErro! Código do site já existente!\n");
             site_apagar(&site);
         }
@@ -113,11 +113,11 @@ void inserir_site(AVL *lista_sites) {
 
     // Exibe a lista atualizada
     printf("\n================================\n\n");
-    avl_imprimir_arvore(lista_sites);
+    avl_site_imprimir(lista_sites);
     printf("================================\n\n");
 }
 
-void remover_site(AVL *lista_sites) {
+void remover_site(AVL_SITE *lista_sites) {
     printf("\n==========REMOVER SITE==========\n");
 
     // Recebe o código do site
@@ -126,7 +126,7 @@ void remover_site(AVL *lista_sites) {
     scanf("%d", &codigo);
 
     // Tenta remover o site
-    if (!avl_remover(lista_sites, codigo))
+    if (!avl_site_remover(lista_sites, codigo))
         printf("\nCódigo inexistente. Não foi possível apagar o site!\n");
 
     else
@@ -134,11 +134,11 @@ void remover_site(AVL *lista_sites) {
 
     // Imprime a nova lista
     printf("\n================================\n\n");
-    avl_imprimir_arvore(lista_sites);
+    avl_site_imprimir(lista_sites);
     printf("================================\n\n");
 }
 
-void inserir_palavra_chave(AVL *lista_sites) {
+void inserir_palavra_chave(AVL_SITE *lista_sites) {
     printf("\n=====INSERIR PALAVRA-CHAVE======\n");
 
     // Recebe o código do site
@@ -148,7 +148,7 @@ void inserir_palavra_chave(AVL *lista_sites) {
     printf("\n");
 
     // Busca o site
-    SITE *site = avl_busca(lista_sites, codigo);
+    SITE *site = avl_site_busca(lista_sites, codigo);
 
     // Se existir, recebe e insere a nova palavra-chave
     if (site != NULL) {
@@ -163,7 +163,7 @@ void inserir_palavra_chave(AVL *lista_sites) {
             if (auxiliar != NULL) {
                 PCHAVE *pchave = pchave_criar(auxiliar);
 
-                if (lista_pchave_inserir(site_get_palavras_chave(site), pchave) == FALSE) {
+                if (avl_pchave_inserir(site_get_palavras_chave(site), pchave) == FALSE) {
                     printf("Lista de palavras-chave cheia!\n");
                     pchave_apagar(&pchave);
                 }
@@ -180,11 +180,11 @@ void inserir_palavra_chave(AVL *lista_sites) {
 
     // Imprime a lista atualizada
     printf("\n================================\n\n");
-    avl_imprimir_arvore(lista_sites);
+    avl_site_imprimir(lista_sites);
     printf("================================\n\n");
 }
 
-void atualizar_relevancia(AVL *lista_sites) {
+void atualizar_relevancia(AVL_SITE *lista_sites) {
     printf("\n======ATUALIZAR RELEVÂNCIA======\n");
 
     // Recebe o código do site
@@ -194,7 +194,7 @@ void atualizar_relevancia(AVL *lista_sites) {
     printf("\n");
 
     // Busca o site
-    SITE *site = avl_busca(lista_sites, codigo);
+    SITE *site = avl_site_busca(lista_sites, codigo);
 
     // Se o site existir, recebe e atribui a nova relevância
     if (site != NULL) {
@@ -209,6 +209,6 @@ void atualizar_relevancia(AVL *lista_sites) {
 
     // Imprime a nova lista
     printf("\n================================\n\n");
-    avl_imprimir_arvore(lista_sites);
+    avl_site_imprimir(lista_sites);
     printf("================================\n\n");
 }

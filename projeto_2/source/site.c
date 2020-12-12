@@ -11,7 +11,7 @@ struct site_ {
     char *nome;
     int relevancia;
     char *link;
-    LISTA_PCHAVE *palavras_chave;
+    AVL_PCHAVE *palavras_chave;
 };
 
 // Cria um novo site em branco
@@ -22,7 +22,7 @@ SITE *site_criar() {
         site->nome = NULL;
         site->relevancia = 0;
         site->link = NULL;
-        site->palavras_chave = lista_pchave_criar();
+        site->palavras_chave = avl_pchave_criar();
     }
 
     return site;
@@ -39,7 +39,7 @@ boolean site_apagar(SITE **site) {
             free((*site)->link);
 
         if ((*site)->palavras_chave != NULL)
-            lista_pchave_apagar(&((*site)->palavras_chave));
+            avl_pchave_apagar(&((*site)->palavras_chave));
 
         // Libera o site
         free(*site);
@@ -57,7 +57,7 @@ void site_imprimir(SITE *site) {
         printf("\tNome: [%s]\n ", site->nome);
         printf("\tRelevância: [%d]\n ", site->relevancia);
         printf("\tLink: [%s]\n ", site->link);
-        lista_pchave_imprimir(site->palavras_chave);
+        avl_pchave_imprimir(site->palavras_chave);
         printf("==========\n");
     }
 }
@@ -67,13 +67,22 @@ int site_get_codigo(SITE *site) {
     if (site != NULL)
         return (site->codigo);
     else {
-        printf("\nERRO: item_get_chave\n");
+        printf("\nERRO: item_get_codigo\n");
+        exit(1);
+    }
+}
+
+int site_get_relevancia(SITE *site) {
+    if (site != NULL)
+        return (site->relevancia);
+    else {
+        printf("\nERRO: item_get_relevancia\n");
         exit(1);
     }
 }
 
 //retorna a lista de palavras-chave de um site
-LISTA_PCHAVE *site_get_palavras_chave(SITE *site) {
+AVL_PCHAVE *site_get_palavras_chave(SITE *site) {
     if (site != NULL)
         return (site->palavras_chave);
     else {
@@ -119,7 +128,7 @@ boolean site_set_link(SITE *site, char *link) {
 }
 
 // Define uma lista de palavras-chave para o site
-boolean site_set_palavras_chave(SITE *site, LISTA_PCHAVE *l) {
+boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l) {
     if (site != NULL) {
         site->palavras_chave = l;
         return (TRUE);

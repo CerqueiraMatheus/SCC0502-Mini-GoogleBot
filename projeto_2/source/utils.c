@@ -41,6 +41,26 @@ void limpa_entrada(FILE *entrada) {
 
     if (entrada != NULL) {
         //Consome todos os caracteres de stdin
-        while (((c = fgetc(entrada)) != '\n') && (c != EOF));
+        while (((c = fgetc(entrada)) != '\n') && (c != EOF))
+            ;
     }
+}
+
+// Verifica se s1 > s2
+bool checa_strings(char *s1, char *s2) {
+    int i = 0;
+
+    //Percorre as duas palavras e compara letra por letra
+    for (; s1[i] != '\0' && s2[i] != '\0'; i++) {
+        if (tolower(s2[i]) > tolower(s1[i])) {
+            return false;
+        } else if (tolower(s2[i]) < tolower(s1[i])) {
+            return true;
+        }
+    }
+
+    //Caso termine de percorrer e as duas sejam iguais,
+    //retorna a menor String
+    return (s1[i] == '\0' && (s2[i] == '\0')) ? false
+                                              : ((s1[i] == '\0') ? false : true);
 }

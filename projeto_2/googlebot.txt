@@ -1,2 +1,10 @@
-0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
-0002,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
+0001,YouTube,100,https://www.youtube.com/,youtube,videos,online
+0002,Netflix,200,https://www.netflix.com/br/,netflix,videos,streaming
+0003,YouTube,300,https://www.youtube.com/,youtube,videos,online
+0004,Netflix,400,https://www.netflix.com/br/,netflix,videos,streaming
+0005,YouTube,500,https://www.youtube.com/,youtube,videos,online
+0006,Netflix,600,https://www.netflix.com/br/,netflix,videos,streaming
+0007,YouTube,700,https://www.youtube.com/,youtube,videos,online
+0008,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
+0009,YouTube,900,https://www.youtube.com/,youtube,videos,online
+0010,Netflix,820,https://www.netflix.com/br/,netflix,videos,streaming
