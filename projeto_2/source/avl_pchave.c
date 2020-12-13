@@ -1,8 +1,9 @@
-#include "avl_pchave.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "avl_pchave.h"             //////////////////////////////
+#include "avl_site.h"                       //TIRAR DEPOIS
+                                    ////////////////////////////////
+#include <stdio.h>                  ///////////////////////////////
+#include <stdlib.h>                 ///////////////////////////////
+#include <string.h>                 ///////////////////////////////
 
 #include "pchave.h"
 #include "utils.h"
@@ -310,4 +311,47 @@ boolean avl_pchave_vazia(AVL_PCHAVE *arvore) {
 boolean avl_pchave_cheia(AVL_PCHAVE *arvore) {
     if (arvore)
         return (arvore->contador == LIMITE_PALAVRAS);
+}
+
+void compara_no(NO *raiz, AVL_PCHAVE *pchave_total){
+    if (raiz != NULL) {
+        compara_no(raiz->esq, pchave_total);
+        //para cada uma das pchaves, analisa se ela já está na árvore, caso contrário, insere
+        if(avl_pchave_busca(pchave_total, pchave_get_string(raiz->pchave)) == NULL){
+            avl_pchave_inserir(pchave_total, raiz->pchave);   
+        }
+        compara_no(raiz->dir, pchave_total);
+    }
+}
+
+void compara_arvores(AVL_PCHAVE *pchave_site, AVL_PCHAVE *pchave_total){
+    if (pchave_site != NULL) {
+        compara_no(pchave_site->raiz, pchave_total);
+    }
+}
+
+
+void avl_pchave_busca_pchave_no(NO *raiz, AVL_SITE *sites, LISTA_SITE **lista_site) {
+    if (raiz != NULL) {
+        avl_pchave_busca_pchave_no(raiz->esq, sites, lista_site);
+
+        //recebe uma lista de sites que contém a pchave dessa recursão 
+        LISTA_SITE *sites_pchave_atual = avl_site_busca_pchave(sites, pchave_get_string(raiz->pchave));
+        //compara a lista de sites da pchave atual (sites_pchave_atual) com a lista
+        // de sites que contêm alguma das palavras-chave identificadas no passo “b” (lista_site)
+        //caso exista algum site que não esteja na lista, ele será inserido
+        compara_listas_sites(sites_pchave_atual, *lista_site);  //lista_site.c
+
+        avl_pchave_busca_pchave_no(raiz->dir, sites, lista_site);
+    }
+}
+
+LISTA_SITE *avl_pchave_busca_pchave(AVL_PCHAVE *pchave, AVL_SITE *sites) {
+    if (pchave != NULL) {
+        LISTA_SITE *lista_site = lista_site_criar();
+        avl_pchave_busca_pchave_no(pchave->raiz, sites, &lista_site);
+        return lista_site;
+    }
+
+    return NULL;
 }

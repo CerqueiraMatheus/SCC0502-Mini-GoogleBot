@@ -92,6 +92,7 @@ void imprime_menu() {
     printf("3 \tInserir palavra-chave\n");
     printf("4 \tAtualizar relevância\n");
     printf("5 \tBusca palavra-chave\n");
+    printf("6 \tSugestão de sites\n");
     printf("7 \tSair\n");
     printf("================================\n\n");
 }
@@ -233,3 +234,23 @@ void busca_pchave(AVL_SITE *arvore) {
 
     free(auxiliar);
 }
+
+void sugestao_sites(AVL_SITE *arvore){
+    printf("\n======SUGESTÃO DE SITES=======\n");
+    printf("Digite a palavra-chave:\n");
+
+    char *auxiliar = ler_linha(stdin, LIMITE_STRING);
+    printf("\n");
+
+    //a) buscar a palavra fornecida entre as palavras-chave de cada site, 
+    //selecionando aqueles que a contém; 
+    LISTA_SITE *lista = avl_site_busca_pchave(arvore, auxiliar);
+
+    //b) coletar todas as palavras-chave dos sites selecionados no passo “a”; 
+    AVL_PCHAVE *pchave_total = lista_site_get_pchaves(lista);
+
+    //c)buscar os sites que contêm alguma das palavras-chave identificadas no passo “b”; 
+    //LISTA_SITE *lista_completa = avl_site_busca_pchave(pchave_total, auxiliar);
+
+
+    }

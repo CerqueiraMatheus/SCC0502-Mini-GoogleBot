@@ -31,5 +31,7 @@ boolean lista_site_vazia(LISTA_SITE *lista);
 boolean lista_site_cheia(LISTA_SITE *lista);
 
 void lista_site_imprimir(LISTA_SITE *lista);
+AVL_PCHAVE *lista_site_get_pchaves(LISTA_SITE *lista);
+void compara_listas_sites(LISTA_SITE *sites_pchave_atual, LISTA_SITE *lista_site);
 
 #endif

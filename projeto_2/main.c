@@ -43,6 +43,10 @@ int main() {
                 busca_pchave(lista_sites);
                 break;
 
+            case 6:
+                sugestao_sites(lista_sites);
+                break;
+
             default:
                 break;
         }

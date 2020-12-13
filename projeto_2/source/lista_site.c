@@ -214,3 +214,42 @@ void lista_site_imprimir(LISTA_SITE *lista) {
     } else
         printf("A lista é nula\n");
 }
+
+//retorna as pchaves da lista de sites
+AVL_PCHAVE *lista_site_get_pchaves(LISTA_SITE *lista){
+    AVL_PCHAVE *pchave_total = avl_pchave_criar();
+
+     NO *atual;
+
+    // Caso a lista exista
+    if (lista != NULL) {
+        // Percorre a lista
+        atual = lista->inicio;
+        while (atual != NULL) {
+            AVL_PCHAVE *pchave_site = site_get_palavras_chave(atual->site);
+            avl_pchave_imprimir(pchave_site);
+            compara_arvores(pchave_site, pchave_total);
+            atual = atual->proximo;
+        }
+        printf("==================\n");
+        avl_pchave_imprimir(pchave_total);
+    }
+    return pchave_total;
+}
+
+void compara_listas_sites(LISTA_SITE *sites_pchave_atual, LISTA_SITE *lista_site){
+    NO *atual;
+
+    // Caso a lista exista
+    if (sites_pchave_atual != NULL) {
+        // Percorre a lista
+        atual = sites_pchave_atual->inicio;
+        while (atual != NULL) {
+
+            if(lista_site_buscar(lista_site, site_get_codigo(atual->site)) == NULL);
+                lista_site_inserir(lista_site, atual->site);
+
+            atual = atual->proximo;
+        }
+    }
+}

@@ -32,4 +32,6 @@ boolean avl_pchave_vazia(AVL_PCHAVE *arvore);
 boolean avl_pchave_cheia(AVL_PCHAVE *arvore);
 void avl_pchave_imprimir(AVL_PCHAVE *arvore);
 
+void compara_arvores(AVL_PCHAVE *pchave_site, AVL_PCHAVE *pchave_total);
+
 #endif
