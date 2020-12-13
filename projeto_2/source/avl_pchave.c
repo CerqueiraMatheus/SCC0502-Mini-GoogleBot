@@ -358,9 +358,14 @@ LISTA_SITE *avl_pchave_busca_pchave(AVL_PCHAVE *pchave, AVL_SITE *sites) {
 
 PCHAVE *avl_pchave_get_raiz(AVL_PCHAVE *arvore) {
     NO *no = arvore->raiz;
-    char *aux = malloc(sizeof(strlen(pchave_get_string(no->pchave)) + 1));
-    strcpy(aux, pchave_get_string(no->pchave));
-    PCHAVE *pchave = pchave_criar(aux);
-    avl_pchave_remover(arvore, pchave_get_string(pchave));
-    return pchave;
+
+    if (no) {
+        char *aux = malloc(sizeof(strlen(pchave_get_string(no->pchave)) + 1));
+        strcpy(aux, pchave_get_string(no->pchave));
+        PCHAVE *pchave = pchave_criar(aux);
+        avl_pchave_remover(arvore, pchave_get_string(pchave));
+        return pchave;
+    }
+
+    return NULL;
 }
