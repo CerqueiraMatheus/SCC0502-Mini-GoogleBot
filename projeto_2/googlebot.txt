@@ -1,4 +1,4 @@
-0001,YouTube,100,https://www.youtube.com/,youtube,videos,online
+0001,YouTube,200,https://www.youtube.com/,youtube,videos,online
 0002,Netflix,200,https://www.netflix.com/br/,netflix,videos,streaming
 0003,YouTube,300,https://www.youtube.com/,youtube,videos,online
 0004,Netflix,400,https://www.netflix.com/br/,netflix,videos,streaming
@@ -8,3 +8,4 @@
 0008,Netflix,200,https://www.netflix.com/br/,netflix,videos,streaming
 0009,YouTube,900,https://www.youtube.com/,youtube,videos,online
 0010,Netflix,820,https://www.netflix.com/br/,netflix,videos,streaming,batata
+0011,Netflix,200,https://www.netflix.com/br/,netflix,videos,streaming
