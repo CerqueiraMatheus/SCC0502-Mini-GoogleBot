@@ -22,7 +22,6 @@ LISTA_SITE *lista_site_criar(void);
 LISTA_SITE *lista_site_ler_csv(FILE *inputFile);
 
 boolean lista_site_inserir(LISTA_SITE *lista, SITE *item);
-boolean lista_site_remover(LISTA_SITE *lista, int chave);
 void lista_site_apagar(LISTA_SITE **lista);
 
 SITE *lista_site_buscar(LISTA_SITE *lista, int chave);

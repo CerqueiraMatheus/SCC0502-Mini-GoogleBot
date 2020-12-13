@@ -5,6 +5,6 @@
 0005,YouTube,500,https://www.youtube.com/,youtube,videos,online,epaminondas
 0006,Netflix,600,https://www.netflix.com/br/,netflix,videos,streaming
 0007,YouTube,700,https://www.youtube.com/,youtube,videos,online
-0008,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
+0008,Netflix,200,https://www.netflix.com/br/,netflix,videos,streaming
 0009,YouTube,900,https://www.youtube.com/,youtube,videos,online
 0010,Netflix,820,https://www.netflix.com/br/,netflix,videos,streaming,batata
