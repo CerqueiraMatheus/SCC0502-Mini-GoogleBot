@@ -34,4 +34,6 @@ void avl_pchave_imprimir(AVL_PCHAVE *arvore);
 
 void compara_arvores(AVL_PCHAVE *pchave_site, AVL_PCHAVE *pchave_total);
 
+PCHAVE *avl_pchave_get_raiz(AVL_PCHAVE *arvore);
+
 #endif
