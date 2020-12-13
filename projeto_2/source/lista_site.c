@@ -45,7 +45,8 @@ boolean lista_site_inserir_posicao(LISTA_SITE *lista, SITE *site) {
             // Percorre a lista
             while (no_atual != NULL) {
                 // Caso seja a posição correta para inserção
-                if (site_get_relevancia(site) >= site_get_relevancia(no_atual->site)) {
+                if (site_get_relevancia(site) >= site_get_relevancia(no_atual->site) &&
+                    site_get_codigo(site) != site_get_codigo(no_atual->site)) {
                     // Cria um novo nó e o adiciona
                     no_novo = (NO *)malloc(sizeof(NO));
                     no_novo->site = site;
