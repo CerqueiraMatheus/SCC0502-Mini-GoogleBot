@@ -25,7 +25,6 @@ PCHAVE *pchave_criar(char *string) {
 // Apaga uma palavra-chave a partir de seu endereço
 boolean pchave_apagar(PCHAVE **pchave) {
     if (*pchave != NULL) {
-        free((*pchave)->string);
         free(*pchave);
         *pchave = NULL;
         return TRUE;

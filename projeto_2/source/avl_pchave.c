@@ -1,10 +1,8 @@
-#include "avl_pchave.h"  //////////////////////////////
-
-#include "avl_site.h"  //TIRAR DEPOIS
-                       ////////////////////////////////
-#include <stdio.h>     ///////////////////////////////
-#include <stdlib.h>    ///////////////////////////////
-#include <string.h>    ///////////////////////////////
+#include "avl_pchave.h"   
+                       
+#include <stdio.h>     
+#include <stdlib.h>    
+#include <string.h>    
 
 #include "pchave.h"
 #include "utils.h"
@@ -184,11 +182,12 @@ void avl_pchave_troca_max_esq(NO *troca, NO *raiz, NO *ant) {
 }
 
 NO *avl_pchave_remover_aux(NO **raiz, char *chave) {
-    NO *p;
-    if (*raiz == NULL)
+     NO *p;
+    if (*raiz == NULL){
         return NULL;
+    }
 
-    else if (strcmp(chave, pchave_get_string((*raiz)->pchave))) {
+    else if (strcmp(chave, pchave_get_string((*raiz)->pchave)) == 0) {
         if ((*raiz)->esq == NULL || (*raiz)->dir == NULL) {
             p = *raiz;
             *raiz = ((*raiz)->esq == NULL) ? ((*raiz)->dir) : ((*raiz)->esq);
@@ -198,7 +197,7 @@ NO *avl_pchave_remover_aux(NO **raiz, char *chave) {
             avl_pchave_troca_max_esq((*raiz)->esq, (*raiz), (*raiz));
         }
     }
-
+    
     else if (checa_strings(chave, pchave_get_string((*raiz)->pchave))) {
         (*raiz)->esq = avl_pchave_remover_aux(&(*raiz)->esq, chave);
         (*raiz)->altura = max(avl_pchave_altura_no((*raiz)->esq), avl_pchave_altura_no((*raiz)->dir)) + 1;
@@ -331,30 +330,6 @@ void compara_arvores(AVL_PCHAVE *pchave_site, AVL_PCHAVE *pchave_total) {
     }
 }
 
-void avl_pchave_busca_pchave_no(NO *raiz, AVL_SITE *sites, LISTA_SITE **lista_site) {
-    if (raiz != NULL) {
-        avl_pchave_busca_pchave_no(raiz->esq, sites, lista_site);
-
-        //recebe uma lista de sites que contém a pchave dessa recursão
-        LISTA_SITE *sites_pchave_atual = avl_site_busca_pchave(sites, pchave_get_string(raiz->pchave));
-        //compara a lista de sites da pchave atual (sites_pchave_atual) com a lista
-        // de sites que contêm alguma das palavras-chave identificadas no passo “b” (lista_site)
-        //caso exista algum site que não esteja na lista, ele será inserido
-        compara_listas_sites(sites_pchave_atual, *lista_site);  //lista_site.c
-
-        avl_pchave_busca_pchave_no(raiz->dir, sites, lista_site);
-    }
-}
-
-LISTA_SITE *avl_pchave_busca_pchave(AVL_PCHAVE *pchave, AVL_SITE *sites) {
-    if (pchave != NULL) {
-        LISTA_SITE *lista_site = lista_site_criar();
-        avl_pchave_busca_pchave_no(pchave->raiz, sites, &lista_site);
-        return lista_site;
-    }
-
-    return NULL;
-}
 
 PCHAVE *avl_pchave_get_raiz(AVL_PCHAVE *arvore) {
     NO *no = arvore->raiz;

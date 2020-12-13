@@ -9,6 +9,7 @@
 #include "avl_pchave.h"
 #include "lista_site.h"
 #include "utils.h"
+#include "pchave.h"
 
 SITE *site_criar_completo();
 void imprime_menu();

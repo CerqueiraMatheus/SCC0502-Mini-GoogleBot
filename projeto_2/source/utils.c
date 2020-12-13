@@ -58,7 +58,6 @@ bool checa_strings(char *s1, char *s2) {
             return true;
         }
     }
-
     //Caso termine de percorrer e as duas sejam iguais,
     //retorna a menor String
     return (s1[i] == '\0' && (s2[i] == '\0')) ? false

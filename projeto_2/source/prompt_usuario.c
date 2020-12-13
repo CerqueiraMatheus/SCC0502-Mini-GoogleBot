@@ -225,7 +225,7 @@ void busca_pchave(AVL_SITE *arvore) {
     LISTA_SITE *lista = avl_site_busca_pchave(arvore, auxiliar);
 
     if (lista != NULL) {
-        lista_site_imprimir(lista);
+        lista_site_imprimir(lista, 0);
     } else {
         printf("Nenhum site relevante encontrado\n");
     }
@@ -250,7 +250,22 @@ void sugestao_sites(AVL_SITE *arvore) {
     AVL_PCHAVE *pchave_total = lista_site_get_pchaves(lista);
 
     //c)buscar os sites que contêm alguma das palavras-chave identificadas no passo “b”;
-    //LISTA_SITE *lista_completa = avl_site_busca_pchave(pchave_total, auxiliar);
+    LISTA_SITE *lista_site = lista_site_criar();
+    PCHAVE *pchave = avl_pchave_get_raiz(pchave_total);
+    while(pchave != NULL){
+        LISTA_SITE *sites_pchave_atual = avl_site_busca_pchave(arvore, pchave_get_string(pchave));
+        compara_listas_sites(sites_pchave_atual, lista_site);  
+        pchave_apagar(&pchave);
+        pchave = avl_pchave_get_raiz(pchave_total);
+        lista_site_apagar(&sites_pchave_atual);
+    }
 
-    pchave_imprimir(avl_pchave_get_raiz(pchave_total));
+    //d)mostrar o nome e o link dos cinco (5) sites mais relevantes ordenados por relevância
+    lista_site_imprimir(lista_site, 1);
+
+    //libera memória
+    lista_site_apagar(&lista);
+    avl_pchave_apagar(&pchave_total);
+    lista_site_apagar(&lista_site);
+    free(auxiliar);
 }

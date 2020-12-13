@@ -193,7 +193,7 @@ void lista_site_apagar(LISTA_SITE **lista) {
 }
 
 // Imprime todos os sites de uma lista
-void lista_site_imprimir(LISTA_SITE *lista) {
+void lista_site_imprimir(LISTA_SITE *lista, int flag) {
     NO *atual;
     boolean imprimiu_valor = FALSE;
 
@@ -201,11 +201,14 @@ void lista_site_imprimir(LISTA_SITE *lista) {
     if (lista != NULL) {
         printf("\n");
         atual = lista->inicio;
-
+        int i = 0;
         while (atual != NULL) {
+            i++;
             imprimiu_valor = TRUE;
-            site_imprimir(atual->site);
-            printf("\n");
+            if(!flag || i < 6){
+                site_imprimir(atual->site);
+                printf("\n");
+            }
             atual = atual->proximo;
         }
 
@@ -227,12 +230,9 @@ AVL_PCHAVE *lista_site_get_pchaves(LISTA_SITE *lista){
         atual = lista->inicio;
         while (atual != NULL) {
             AVL_PCHAVE *pchave_site = site_get_palavras_chave(atual->site);
-            avl_pchave_imprimir(pchave_site);
             compara_arvores(pchave_site, pchave_total);
             atual = atual->proximo;
         }
-        printf("==================\n");
-        avl_pchave_imprimir(pchave_total);
     }
     return pchave_total;
 }
@@ -245,10 +245,7 @@ void compara_listas_sites(LISTA_SITE *sites_pchave_atual, LISTA_SITE *lista_site
         // Percorre a lista
         atual = sites_pchave_atual->inicio;
         while (atual != NULL) {
-
-            if(lista_site_buscar(lista_site, site_get_codigo(atual->site)) == NULL);
-                lista_site_inserir(lista_site, atual->site);
-
+            lista_site_inserir(lista_site, atual->site);
             atual = atual->proximo;
         }
     }
