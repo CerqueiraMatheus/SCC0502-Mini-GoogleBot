@@ -20,6 +20,7 @@ struct lista_site_ {
 };
 
 // Cria uma nova lista de site vazia
+// Retorna uma lista de sites
 LISTA_SITE *lista_site_criar() {
     LISTA_SITE *lista = (LISTA_SITE *)malloc(sizeof(LISTA_SITE));
     if (lista != NULL) {
@@ -31,6 +32,7 @@ LISTA_SITE *lista_site_criar() {
 }
 
 // Insere um novo nó na lista de sites de forma que esta continue ordenada
+// Retorna um boolean
 boolean lista_site_inserir_posicao(LISTA_SITE *lista, SITE *site) {
     NO *no_atual;
     NO *no_anterior;
@@ -48,7 +50,6 @@ boolean lista_site_inserir_posicao(LISTA_SITE *lista, SITE *site) {
                 if (site_get_relevancia(site) > site_get_relevancia(no_atual->site) ||
                     (site_get_codigo(site) <= site_get_codigo(no_atual->site) &&
                      site_get_relevancia(site) == site_get_relevancia(no_atual->site))) {
-                    
                     // Prevenção de sites iguais
                     if (site_get_codigo(site) == site_get_codigo(no_atual->site))
                         return FALSE;
@@ -106,6 +107,7 @@ boolean lista_site_inserir_posicao(LISTA_SITE *lista, SITE *site) {
 }
 
 // Insere um site na lista
+// Retorna um boolean
 boolean lista_site_inserir(LISTA_SITE *lista, SITE *site) {
     // Caso o site não exista
     if (!lista_site_buscar(lista, site_get_relevancia(site)))
@@ -135,6 +137,7 @@ SITE *lista_site_buscar(LISTA_SITE *lista, int codigo) {
 }
 
 // Checa se a lista está vazia
+// Retorna um boolean
 boolean lista_site_vazia(LISTA_SITE *lista) {
     if ((lista != NULL) && lista->inicio == NULL)
         return (TRUE);
@@ -142,6 +145,7 @@ boolean lista_site_vazia(LISTA_SITE *lista) {
 }
 
 // Checa se a lista está cheia
+// Retorna um boolean
 boolean lista_site_cheia(LISTA_SITE *lista) {
     int contador = 0;
 
@@ -163,11 +167,12 @@ boolean lista_site_cheia(LISTA_SITE *lista) {
         return FALSE;
 }
 
-boolean lista_site_remover_nos(LISTA_SITE *lista, NO *anterior, NO *atual) {
+// Remove recursivamente os nós
+void lista_site_apagar_rec(LISTA_SITE *lista, NO *anterior, NO *atual) {
     // Caso a lista exista
     if (lista != NULL && lista->tamanho != 0) {
         if (site_get_codigo(atual->site) != site_get_codigo(lista->fim->site)) {
-            lista_site_remover_nos(lista, atual, atual->proximo);
+            lista_site_apagar_rec(lista, atual, atual->proximo);
         }
 
         free(atual);
@@ -186,7 +191,7 @@ boolean lista_site_remover_nos(LISTA_SITE *lista, NO *anterior, NO *atual) {
 void lista_site_apagar(LISTA_SITE **lista) {
     if (*lista != NULL) {
         if ((*lista)->tamanho != 0)
-            lista_site_remover_nos(*lista, NULL, (*lista)->inicio);
+            lista_site_apagar_rec(*lista, NULL, (*lista)->inicio);
         free(*lista);
         *lista = NULL;
     }
@@ -205,7 +210,7 @@ void lista_site_imprimir(LISTA_SITE *lista, int flag) {
         while (atual != NULL) {
             i++;
             imprimiu_valor = TRUE;
-            if(!flag || i < 6){
+            if (!flag || i < 6) {
                 site_imprimir(atual->site);
                 printf("\n");
             }
@@ -218,34 +223,35 @@ void lista_site_imprimir(LISTA_SITE *lista, int flag) {
         printf("A lista é nula\n");
 }
 
-//retorna as pchaves da lista de sites
-AVL_PCHAVE *lista_site_get_pchaves(LISTA_SITE *lista){
-    AVL_PCHAVE *pchave_total = avl_pchave_criar();
-
-     NO *atual;
-
+// Informa as palavras-chave de um site
+// Retorna uma AVL_PCHAVE
+AVL_PCHAVE *lista_site_get_pchaves(LISTA_SITE *lista) {
+    AVL_PCHAVE *pchave_total = NULL;
     // Caso a lista exista
     if (lista != NULL) {
-        // Percorre a lista
-        atual = lista->inicio;
+        pchave_total = avl_pchave_criar();
+
+        NO *atual = lista->inicio;
         while (atual != NULL) {
             AVL_PCHAVE *pchave_site = site_get_palavras_chave(atual->site);
-            compara_arvores(pchave_site, pchave_total);
+            avl_pchave_adicionar_pchaves(pchave_site, pchave_total);
             atual = atual->proximo;
         }
     }
+
     return pchave_total;
 }
 
-void compara_listas_sites(LISTA_SITE *sites_pchave_atual, LISTA_SITE *lista_site){
+// Insere os sites de uma lista de sites origem numa lista de destino
+void lista_site_inserir_sites(LISTA_SITE *lista_origem, LISTA_SITE *lista_destino) {
     NO *atual;
 
     // Caso a lista exista
-    if (sites_pchave_atual != NULL) {
+    if (lista_origem != NULL) {
         // Percorre a lista
-        atual = sites_pchave_atual->inicio;
+        atual = lista_origem->inicio;
         while (atual != NULL) {
-            lista_site_inserir(lista_site, atual->site);
+            lista_site_inserir(lista_destino, atual->site);
             atual = atual->proximo;
         }
     }

@@ -15,6 +15,7 @@ struct site_ {
 };
 
 // Cria um novo site em branco
+// Retorna um SITE
 SITE *site_criar() {
     SITE *site = (SITE *)malloc(sizeof(SITE));
     if (site != NULL) {
@@ -29,6 +30,7 @@ SITE *site_criar() {
 }
 
 // Apaga um site da lista a partir de seu endereço
+// Retorna um boolean
 boolean site_apagar(SITE **site) {
     // Se o site existir
     if (*site != NULL) {
@@ -62,7 +64,8 @@ void site_imprimir(SITE *site) {
     }
 }
 
-//retorna o código de um site
+// Informa o código de um site
+// Retorna um int
 int site_get_codigo(SITE *site) {
     if (site != NULL)
         return (site->codigo);
@@ -72,6 +75,8 @@ int site_get_codigo(SITE *site) {
     }
 }
 
+// Informa a relevância de um site
+// Retorna um int
 int site_get_relevancia(SITE *site) {
     if (site != NULL)
         return (site->relevancia);
@@ -81,7 +86,8 @@ int site_get_relevancia(SITE *site) {
     }
 }
 
-//retorna a lista de palavras-chave de um site
+// Informa as palavras-chave de um site
+// Retorna uma AVL_PCHAVE
 AVL_PCHAVE *site_get_palavras_chave(SITE *site) {
     if (site != NULL)
         return (site->palavras_chave);
@@ -92,6 +98,7 @@ AVL_PCHAVE *site_get_palavras_chave(SITE *site) {
 }
 
 // Define um código para o site
+// Retorna um boolean
 boolean site_set_codigo(SITE *site, int codigo) {
     if (site != NULL) {
         site->codigo = codigo;
@@ -101,6 +108,7 @@ boolean site_set_codigo(SITE *site, int codigo) {
 }
 
 // Define um nome para o site
+// Retorna um boolean
 boolean site_set_nome(SITE *site, char *nome) {
     if (site != NULL) {
         site->nome = nome;
@@ -110,6 +118,7 @@ boolean site_set_nome(SITE *site, char *nome) {
 }
 
 // Define uma revelância para um site
+// Retorna um boolean
 boolean site_set_relevancia(SITE *site, int relevancia) {
     if (site != NULL) {
         site->relevancia = relevancia;
@@ -119,6 +128,7 @@ boolean site_set_relevancia(SITE *site, int relevancia) {
 }
 
 // Define um link para um site
+// Retorna um boolean
 boolean site_set_link(SITE *site, char *link) {
     if (site != NULL) {
         site->link = link;
@@ -128,6 +138,7 @@ boolean site_set_link(SITE *site, char *link) {
 }
 
 // Define uma lista de palavras-chave para o site
+// Retorna um boolean
 boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l) {
     if (site != NULL) {
         site->palavras_chave = l;
@@ -136,10 +147,12 @@ boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l) {
     return (FALSE);
 }
 
-boolean site_checa_pchave(SITE *site, char *pchave) {
+// Verifica se um site contém uma palavra-chave
+// Retorna um boolean
+boolean site_contem_pchave(SITE *site, char *pchave) {
     if (site != NULL) {
         AVL_PCHAVE *avl_pchave = site_get_palavras_chave(site);
-        return avl_pchave_busca(avl_pchave, pchave) != NULL;
+        return avl_pchave_buscar(avl_pchave, pchave) != NULL;
     }
     return FALSE;
 }

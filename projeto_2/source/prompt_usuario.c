@@ -1,5 +1,19 @@
 #include "prompt_usuario.h"
 
+// Imprime o menu da interface
+void imprime_menu() {
+    printf("\n==============MENU==============\n");
+    printf("OPÇÃO \tDESCRIÇÃO\n");
+    printf("1 \tInserir um site\n");
+    printf("2 \tRemover um site\n");
+    printf("3 \tInserir palavra-chave\n");
+    printf("4 \tAtualizar relevância\n");
+    printf("5 \tBusca palavra-chave\n");
+    printf("6 \tSugestão de sites\n");
+    printf("7 \tSair\n");
+    printf("================================\n\n");
+}
+
 // Lê as informações do stdin e cria um novo site completo a partir delas
 // Retorna um site
 SITE *site_criar_completo() {
@@ -9,7 +23,6 @@ SITE *site_criar_completo() {
     int codigo, relevancia;
 
     site = site_criar();
-
     printf("Digite o código do site:\n");
     scanf("%d", &codigo);
     printf("\n");
@@ -84,19 +97,7 @@ SITE *site_criar_completo() {
     return NULL;
 }
 
-void imprime_menu() {
-    printf("\n==============MENU==============\n");
-    printf("OPÇÃO \tDESCRIÇÃO\n");
-    printf("1 \tInserir um site\n");
-    printf("2 \tRemover um site\n");
-    printf("3 \tInserir palavra-chave\n");
-    printf("4 \tAtualizar relevância\n");
-    printf("5 \tBusca palavra-chave\n");
-    printf("6 \tSugestão de sites\n");
-    printf("7 \tSair\n");
-    printf("================================\n\n");
-}
-
+// Lê as informações de um site e o insere numa lista
 void inserir_site(AVL_SITE *lista_sites) {
     printf("\n==========INSERIR SITE==========\n");
 
@@ -119,6 +120,7 @@ void inserir_site(AVL_SITE *lista_sites) {
     printf("================================\n\n");
 }
 
+// Lê o código de um site e o remove de uma lista
 void remover_site(AVL_SITE *lista_sites) {
     printf("\n==========REMOVER SITE==========\n");
 
@@ -140,6 +142,7 @@ void remover_site(AVL_SITE *lista_sites) {
     printf("================================\n\n");
 }
 
+// Lê o código de um site e insere uma palavra-chave
 void inserir_palavra_chave(AVL_SITE *lista_sites) {
     printf("\n=====INSERIR PALAVRA-CHAVE======\n");
 
@@ -150,7 +153,7 @@ void inserir_palavra_chave(AVL_SITE *lista_sites) {
     printf("\n");
 
     // Busca o site
-    SITE *site = avl_site_busca(lista_sites, codigo);
+    SITE *site = avl_site_buscar(lista_sites, codigo);
 
     // Se existir, recebe e insere a nova palavra-chave
     if (site != NULL) {
@@ -186,6 +189,7 @@ void inserir_palavra_chave(AVL_SITE *lista_sites) {
     printf("================================\n\n");
 }
 
+// Lê o código de um site e atualiza sua relevância
 void atualizar_relevancia(AVL_SITE *lista_sites) {
     printf("\n======ATUALIZAR RELEVÂNCIA======\n");
 
@@ -196,7 +200,7 @@ void atualizar_relevancia(AVL_SITE *lista_sites) {
     printf("\n");
 
     // Busca o site
-    SITE *site = avl_site_busca(lista_sites, codigo);
+    SITE *site = avl_site_buscar(lista_sites, codigo);
 
     // Se o site existir, recebe e atribui a nova relevância
     if (site != NULL) {
@@ -215,57 +219,64 @@ void atualizar_relevancia(AVL_SITE *lista_sites) {
     printf("================================\n\n");
 }
 
+// Lê uma palavra chave, busca entre os sites e exibe os correspondentes
 void busca_pchave(AVL_SITE *arvore) {
     printf("\n======BUSCAR PALAVRA-CHAVE=======\n");
     printf("Digite a palavra-chave:\n");
 
+    // Recebe a palavra
     char *auxiliar = ler_linha(stdin, LIMITE_STRING);
     printf("\n");
 
-    LISTA_SITE *lista = avl_site_busca_pchave(arvore, auxiliar);
-
-    if (lista != NULL) {
+    // Busca pelos sites
+    LISTA_SITE *lista = avl_site_buscar_pchave(arvore, auxiliar);
+    if (lista != NULL)
         lista_site_imprimir(lista, 0);
-    } else {
+    else
         printf("Nenhum site relevante encontrado\n");
-    }
 
+    // Apaga a busca
     lista_site_apagar(&lista);
 
     free(auxiliar);
 }
 
+// Lê uma palavra chave, busca entre os sites e exibe as sugestões
 void sugestao_sites(AVL_SITE *arvore) {
     printf("\n======SUGESTÃO DE SITES=======\n");
     printf("Digite a palavra-chave:\n");
 
+    // Recebe a palavra
     char *auxiliar = ler_linha(stdin, LIMITE_STRING);
     printf("\n");
 
-    //a) buscar a palavra fornecida entre as palavras-chave de cada site,
-    //selecionando aqueles que a contém;
-    LISTA_SITE *lista = avl_site_busca_pchave(arvore, auxiliar);
+    // Passo A: buscar a palavra fornecida entre as palavras-chave de cada
+    // site, selecionando aqueles que a contém
+    LISTA_SITE *lista_preliminar = avl_site_buscar_pchave(arvore, auxiliar);
 
-    //b) coletar todas as palavras-chave dos sites selecionados no passo “a”;
-    AVL_PCHAVE *pchave_total = lista_site_get_pchaves(lista);
+    // Passo B: coletar todas as palavras-chave dos sites selecionados
+    // no Passo A
+    AVL_PCHAVE *avl_pchave_destino = lista_site_get_pchaves(lista_preliminar);
 
-    //c)buscar os sites que contêm alguma das palavras-chave identificadas no passo “b”;
+    // Passo C: buscar os sites que contêm alguma das palavras-chave
+    // identificadas no Passo B;
     LISTA_SITE *lista_site = lista_site_criar();
-    PCHAVE *pchave = avl_pchave_get_raiz(pchave_total);
-    while(pchave != NULL){
-        LISTA_SITE *sites_pchave_atual = avl_site_busca_pchave(arvore, pchave_get_string(pchave));
-        compara_listas_sites(sites_pchave_atual, lista_site);  
+    PCHAVE *pchave = avl_pchave_get_raiz(avl_pchave_destino);
+    while (pchave != NULL) {
+        LISTA_SITE *sites_pchave_atual = avl_site_buscar_pchave(arvore, pchave_get_string(pchave));
+        lista_site_inserir_sites(sites_pchave_atual, lista_site);
         pchave_apagar(&pchave);
-        pchave = avl_pchave_get_raiz(pchave_total);
+        pchave = avl_pchave_get_raiz(avl_pchave_destino);
         lista_site_apagar(&sites_pchave_atual);
     }
 
-    //d)mostrar o nome e o link dos cinco (5) sites mais relevantes ordenados por relevância
+    // Passo D: mostrar o nome e o link dos cinco (5) sites mais relevantes
+    // ordenados por relevância
     lista_site_imprimir(lista_site, 1);
 
-    //libera memória
-    lista_site_apagar(&lista);
-    avl_pchave_apagar(&pchave_total);
+    // Libera memória
+    lista_site_apagar(&lista_preliminar);
+    avl_pchave_apagar(&avl_pchave_destino);
     lista_site_apagar(&lista_site);
     free(auxiliar);
 }

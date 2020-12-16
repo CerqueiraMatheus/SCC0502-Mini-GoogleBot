@@ -22,6 +22,7 @@ struct avl_site {
 };
 
 // Cria uma avl inicializando sua raiz como NULL e sua profundidade como -1
+// Retorna uma AVL_SITE
 AVL_SITE *avl_site_criar() {
     AVL_SITE *arvore = (AVL_SITE *)malloc(sizeof(AVL_SITE));
     if (arvore != NULL) {
@@ -51,6 +52,7 @@ void avl_site_apagar(AVL_SITE **arvore) {
 }
 
 // Calcula a altura de determinado nó
+// Retorna um int
 int avl_site_altura_no(NO *raiz) {
     if (raiz == NULL) {
         return -1;
@@ -60,46 +62,51 @@ int avl_site_altura_no(NO *raiz) {
 }
 
 // Faz uma rotação para a direita
-NO *avl_site_rodar_direita(NO *a) {
-    NO *b = a->esq;
-    a->esq = b->dir;
-    b->dir = a;
-    a->altura = max(avl_site_altura_no(a->esq),
-                    avl_site_altura_no(a->dir)) +
+// Retorna um nó para a raiz
+NO *avl_site_rodar_direita(NO *raiz) {
+    NO *b = raiz->esq;
+    raiz->esq = b->dir;
+    b->dir = raiz;
+    raiz->altura = max(avl_site_altura_no(raiz->esq),
+                    avl_site_altura_no(raiz->dir)) +
                 1;
     b->altura = max(avl_site_altura_no(b->esq),
-                    a->altura) +
+                    raiz->altura) +
                 1;
     return b;
 }
 
 // Faz uma rotação para a esquerda
-NO *avl_site_rodar_esquerda(NO *a) {
-    NO *b = a->dir;
-    a->dir = b->esq;
-    b->esq = a;
-    a->altura = max(avl_site_altura_no(a->esq),
-                    avl_site_altura_no(a->dir)) +
+// Retorna um nó para a raiz
+NO *avl_site_rodar_esquerda(NO *raiz) {
+    NO *b = raiz->dir;
+    raiz->dir = b->esq;
+    b->esq = raiz;
+    raiz->altura = max(avl_site_altura_no(raiz->esq),
+                    avl_site_altura_no(raiz->dir)) +
                 1;
     b->altura = max(avl_site_altura_no(b->dir),
-                    a->altura) +
+                    raiz->altura) +
                 1;
     return b;
 }
 
 // Faz uma rotação para a esquerda e depois para a direita
-NO *avl_site_rodar_esquerda_direita(NO *a) {
-    a->esq = avl_site_rodar_esquerda(a->esq);
-    return avl_site_rodar_direita(a);
+// Retorna um nó para a raiz
+NO *avl_site_rodar_esquerda_direita(NO *raiz) {
+    raiz->esq = avl_site_rodar_esquerda(raiz->esq);
+    return avl_site_rodar_direita(raiz);
 }
 
 // Faz uma rotação para a direita e depois para a esquerda
-NO *avl_site_rodar_direita_esquerda(NO *a) {
-    a->dir = avl_site_rodar_direita(a->dir);
-    return avl_site_rodar_esquerda(a);
+// Retorna um nó para a raiz
+NO *avl_site_rodar_direita_esquerda(NO *raiz) {
+    raiz->dir = avl_site_rodar_direita(raiz->dir);
+    return avl_site_rodar_esquerda(raiz);
 }
 
 // Cria um novo nó a partir de um item
+// Retorna um nó
 NO *avl_site_cria_no(SITE *site) {
     NO *no = (NO *)malloc(sizeof(NO));
     if (no != NULL) {
@@ -112,6 +119,7 @@ NO *avl_site_cria_no(SITE *site) {
 }
 
 // Insere um nó de forma balanceada
+// Retorna um nó para a raiz
 NO *avl_site_inserir_no(NO *raiz, SITE *site) {
     if (raiz == NULL) {
         raiz = avl_site_cria_no(site);
@@ -152,6 +160,7 @@ NO *avl_site_inserir_no(NO *raiz, SITE *site) {
 }
 
 // Insere um nó na árvore
+// Retorna um boolean
 boolean avl_site_inserir(AVL_SITE *arvore, SITE *site) {
     NO *aux = avl_site_inserir_no(arvore->raiz, site);
 
@@ -164,6 +173,7 @@ boolean avl_site_inserir(AVL_SITE *arvore, SITE *site) {
     return FALSE;
 }
 
+// Troca máxima a esquerda
 void avl_site_troca_max_esq(NO *troca, NO *raiz, NO *ant) {
     if (troca->dir != NULL) {
         avl_site_troca_max_esq(troca->dir, raiz, troca);
@@ -179,7 +189,9 @@ void avl_site_troca_max_esq(NO *troca, NO *raiz, NO *ant) {
     troca = NULL;
 }
 
-NO *avl_site_remover_aux(NO **raiz, int chave, boolean *aux) {
+// Busca recursivamente por um site para remoção
+// Retorna um nó para a raiz
+NO *avl_site_remover_rec(NO **raiz, int chave, boolean *aux) {
     NO *p;
     if (*raiz == NULL)
         return NULL;
@@ -198,12 +210,12 @@ NO *avl_site_remover_aux(NO **raiz, int chave, boolean *aux) {
     }
 
     else if (chave < site_get_codigo((*raiz)->site)) {
-        (*raiz)->esq = avl_site_remover_aux(&(*raiz)->esq, chave, aux);
+        (*raiz)->esq = avl_site_remover_rec(&(*raiz)->esq, chave, aux);
         (*raiz)->altura = max(avl_site_altura_no((*raiz)->esq), avl_site_altura_no((*raiz)->dir)) + 1;
     }
 
     else if (chave > site_get_codigo((*raiz)->site)) {
-        (*raiz)->dir = avl_site_remover_aux(&(*raiz)->dir, chave, aux);
+        (*raiz)->dir = avl_site_remover_rec(&(*raiz)->dir, chave, aux);
         (*raiz)->altura = max(avl_site_altura_no((*raiz)->esq), avl_site_altura_no((*raiz)->dir)) + 1;
     }
 
@@ -229,9 +241,10 @@ NO *avl_site_remover_aux(NO **raiz, int chave, boolean *aux) {
 }
 
 // Remove um nó a partir de sua chave, mas continua deixando a árvore final balanceada
+// Retorna um boolean
 boolean avl_site_remover(AVL_SITE *arvore, int chave) {
     boolean removido = FALSE;
-    arvore->raiz = avl_site_remover_aux(&arvore->raiz, chave, &removido);
+    arvore->raiz = avl_site_remover_rec(&arvore->raiz, chave, &removido);
 
     if (removido) {
         arvore->contador--;
@@ -241,7 +254,9 @@ boolean avl_site_remover(AVL_SITE *arvore, int chave) {
     return FALSE;
 }
 
-SITE *avl_site_busca_no(NO *raiz, int chave) {
+// Busca um site recursivamente a partir da chave
+// Retorna um site
+SITE *avl_site_busca_rec(NO *raiz, int chave) {
     if (raiz == NULL)
         return NULL;
 
@@ -251,15 +266,16 @@ SITE *avl_site_busca_no(NO *raiz, int chave) {
 
     // Caso 2: chave na posição esquerda
     if (chave < site_get_codigo(raiz->site))
-        return (avl_site_busca_no(raiz->esq, chave));
+        return (avl_site_busca_rec(raiz->esq, chave));
 
     // Caso 3: chave na posição direita
-    return (avl_site_busca_no(raiz->dir, chave));
+    return (avl_site_busca_rec(raiz->dir, chave));
 }
 
 // Faz uma busca na árvore através de uma chave e retorna o item procurado
-SITE *avl_site_busca(AVL_SITE *arvore, int chave) {
-    return (avl_site_busca_no(arvore->raiz, chave));
+// Retorna um site
+SITE *avl_site_buscar(AVL_SITE *arvore, int chave) {
+    return (avl_site_busca_rec(arvore->raiz, chave));
 }
 
 // Realiza o percurso pré-ordem recursivamente
@@ -307,7 +323,7 @@ void avl_site_imprimir(AVL_SITE *arvore) {
 }
 
 // Lê um arquivo .csv
-// Retorna uma lista de sites
+// Retorna uma AVL de sites
 AVL_SITE *avl_site_ler_csv(FILE *arquivo) {
     AVL_SITE *avl = avl_site_criar();
     SITE *site = NULL;
@@ -392,21 +408,24 @@ AVL_SITE *avl_site_ler_csv(FILE *arquivo) {
     return avl;
 }
 
-void avl_site_busca_pchave_no(NO *raiz, char *pchave, LISTA_SITE **lista_site) {
+// Busca recursivamente por sites que tenham uma determinada palavra-chave
+void avl_site_busca_pchave_rec(NO *raiz, char *string, LISTA_SITE **lista_site) {
     if (raiz != NULL) {
-        avl_site_busca_pchave_no(raiz->esq, pchave, lista_site);
+        avl_site_busca_pchave_rec(raiz->esq, string, lista_site);
 
-        if (site_checa_pchave(raiz->site, pchave))
+        if (site_contem_pchave(raiz->site, string))
             lista_site_inserir(*lista_site, raiz->site);
 
-        avl_site_busca_pchave_no(raiz->dir, pchave, lista_site);
+        avl_site_busca_pchave_rec(raiz->dir, string, lista_site);
     }
 }
 
-LISTA_SITE *avl_site_busca_pchave(AVL_SITE *arvore, char *pchave) {
+// Busca por sites que tenham uma determinada palavra-chave
+// Retorna uma lista de sites
+LISTA_SITE *avl_site_buscar_pchave(AVL_SITE *arvore, char *pchave) {
     if (arvore != NULL) {
         LISTA_SITE *lista_site = lista_site_criar();
-        avl_site_busca_pchave_no(arvore->raiz, pchave, &lista_site);
+        avl_site_busca_pchave_rec(arvore->raiz, pchave, &lista_site);
         return lista_site;
     }
 

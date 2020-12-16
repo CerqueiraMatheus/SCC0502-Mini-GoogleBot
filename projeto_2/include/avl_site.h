@@ -20,14 +20,18 @@
 
 typedef struct avl_site AVL_SITE;
 
-void avl_site_apagar(AVL_SITE **arvore);
-AVL_SITE *avl_site_criar(void);
-boolean avl_site_inserir(AVL_SITE *arvore, SITE *site);
-boolean avl_site_remover(AVL_SITE *arvore, int chave);
-SITE *avl_site_busca(AVL_SITE *arvore, int chave);
-void avl_site_imprimir(AVL_SITE *T);
+// Função de leitura de arquivo
 AVL_SITE *avl_site_ler_csv(FILE *arquivo);
 
-LISTA_SITE *avl_site_busca_pchave(AVL_SITE *arvore, char *pchave);
+// Funções principais
+AVL_SITE *avl_site_criar(void);
+boolean avl_site_inserir(AVL_SITE *arvore, SITE *site);
+SITE *avl_site_buscar(AVL_SITE *arvore, int chave);
+LISTA_SITE *avl_site_buscar_pchave(AVL_SITE *arvore, char *pchave);
+boolean avl_site_remover(AVL_SITE *arvore, int chave);
+void avl_site_apagar(AVL_SITE **arvore);
+
+// Funções secundárias
+void avl_site_imprimir(AVL_SITE *arvore);
 
 #endif

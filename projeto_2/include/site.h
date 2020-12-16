@@ -19,21 +19,23 @@
 
 typedef struct site_ SITE;
 
+// Funções principais
 SITE *site_criar_completo();
 SITE *site_criar();
 boolean site_apagar(SITE **site);
 void site_imprimir(SITE *site);
 int site_get_codigo(SITE *site);
-AVL_PCHAVE *site_get_palavras_chave(SITE *site);
+boolean site_contem_pchave(SITE *site, char *pchave);
 
+// Setters
 boolean site_set_codigo(SITE *site, int chave);
 boolean site_set_nome(SITE *site, char *nome);
 boolean site_set_relevancia(SITE *site, int relevancia);
 boolean site_set_link(SITE *site, char *link);
 boolean site_set_palavras_chave(SITE *site, AVL_PCHAVE *l);
 
-boolean site_checa_pchave(SITE *site, char *pchave);
-
+// Getters
 int site_get_relevancia(SITE *site);
+AVL_PCHAVE *site_get_palavras_chave(SITE *site);
 
 #endif
