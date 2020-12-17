@@ -7,14 +7,14 @@
 
 int main() {
     FILE *arquivo_entrada = NULL;
-    AVL_SITE *lista_sites = NULL;
+    AVL_SITE *sites = NULL;
     int codigo, escolha = 0;
 
     // Lê o arquivo googlebot.txt
     arquivo_entrada = fopen("googlebot.txt", "r");
 
     // Lê arquivo de texto e adicionar os sites lidos em uma lista
-    lista_sites = avl_site_ler_csv(arquivo_entrada);
+    sites = avl_site_ler_csv(arquivo_entrada);
 
     while (escolha != 7) {
         imprime_menu();
@@ -24,27 +24,27 @@ int main() {
 
         switch (escolha) {
             case 1:
-                inserir_site(lista_sites);
+                inserir_site(sites);
                 break;
 
             case 2:
-                remover_site(lista_sites);
+                remover_site(sites);
                 break;
 
             case 3:
-                inserir_palavra_chave(lista_sites);
+                inserir_palavra_chave(sites);
                 break;
 
             case 4:
-                atualizar_relevancia(lista_sites);
+                atualizar_relevancia(sites);
                 break;
 
             case 5:
-                busca_pchave(lista_sites);
+                busca_pchave(sites);
                 break;
 
             case 6:
-                sugestao_sites(lista_sites);
+                sugestao_sites(sites);
                 break;
 
             default:
@@ -54,7 +54,7 @@ int main() {
 
     // Termina o programa
     printf("\nPrograma terminado\n");
-    avl_site_apagar(&lista_sites);
+    avl_site_apagar(&sites);
     fclose(arquivo_entrada);
 
     return EXIT_SUCCESS;
