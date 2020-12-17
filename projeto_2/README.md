@@ -10,7 +10,7 @@ Segundo trabalho da Disciplina de Algoritmos e Estruturas de Dados I, ministrada
 
 ### Implementação e estruturação do programa
 
-Para construção do programa, utilizou-se a linguagem C-99, com o compilador GCC e, para visualização de erros, o Valgrind. Em conjunto, os autores, através do Git e GitHub, estruturaram o programa usando Tipos Abstratos de Dados, sendo que, em sua totalidade, foram criados 15 arquivos (entre .c e .h), divididos nas subpastas *source* e *include*, excluindo-se o arquivo principal *main.c*, disposto na raiz do projeto. Destarte, para atender os requisitos do trabalho, foram utilizadas as estruturas *SITE*, para os sites, *PCHAVE*, para as palavras-chave, *AVL-SITE*, para uma árvore AVL de sites, *AVL-PCHAVE*, para uma árvore AVL de palavras-chave, *LISTA-SITE*, para uma lista duplamente encadeada de sites, além das funções de uso geral contidas sob *UTILS*. Por fim, em *PROMPT-USUARIO*, há a aplicação dos TADs mencionados, junto das operações visuais necessárias.
+Para construção do programa, utilizou-se a linguagem C-99, com o compilador GCC e, para visualização de erros, o Valgrind. Em conjunto, os autores, através do Git e GitHub, estruturaram o programa usando Tipos Abstratos de Dados, sendo que, em sua totalidade, foram criados 15 arquivos (entre .c e .h), divididos nas subpastas `source` e `include`, excluindo-se o arquivo principal `main.c`, disposto na raiz do projeto. Destarte, para atender os requisitos do trabalho, foram utilizadas as estruturas `SITE`, para os sites, `PCHAVE`, para as palavras-chave, `AVL-SITE`, para uma árvore AVL de sites, `AVL-PCHAVE`, para uma árvore AVL de palavras-chave, `LISTA-SITE`, para uma lista duplamente encadeada de sites, além das funções de uso geral contidas sob `UTILS`. Por fim, em `PROMPT-USUARIO`, há a aplicação dos TADs mencionados, junto das operações visuais necessárias.
 
 ### Funções do programa
 
@@ -28,23 +28,23 @@ Para construção do programa, utilizou-se a linguagem C-99, com o compilador GC
 
 ### Execução do programa
 
-Para o funcionamento do programa, é necessário um arquivo *googlebot.txt*, anexado na raiz da entrega. Com isso, basta executá-lo através de, num terminal aberto na raiz do projeto:
+Para o funcionamento do programa, é necessário um arquivo `googlebot.txt`, anexado na raiz da entrega. Com isso, basta executá-lo através de, num terminal aberto na raiz do projeto:
 
 ```./test```
 
 ## Justificativas para as implementações
 
-### TADs SITE e PCHAVE
+### TADs `SITE` e `PCHAVE`
 
 A partir da interpretação da descrição do projeto, entendemos que seria necessário utilizar um TAD item para cada site informado, com a chave *código* e os atributos *nome*, *relevância* e *link*. Além deles, cada site contém um conjunto de palavras-chave que, por ser fator fundamental em outras funções, tornou evidente que cada palavra-chave deveria ser tratada individualmente como, assim como site, em um TAD item.
 
-### AVL-PCHAVE
+### `AVL-PCHAVE`
 
 Havíamos implementado, na parte I, um *array* ordenado para armazenar as palavras-chave, uma vez que a quantidade de elementos é limitada, com custos (nos piores casos) para inserção e remoção de **O(n)** e, para buscas, de **O(n)**. No entanto, dadas as novas operações, a limitação deixou de existir: para realizarmos a operação de sugestão, um número indefinido de palavras-chave deveria ser armazenado; além disso, tanto na operação de busca, quanto na de sugestão (em escala indefinidamente maior), são executadas buscas no conjunto de palavras-chave de um determinado site.
 
 Portanto, dadas as necessidades de inserção, busca e memória, além do fato de que, num conjunto de palavras-chave não há repetição, optou-se por usar um TAD AVL para o conjunto, mantendo a eficiência na busca quando comparada às demais árvores para o caso. Acrescentamos uma função para executar parte da operação de sugestão: a cópia das palavras-chave de uma lista a outra. Obtivemos, então, nos piores casos, para inserção, remoção e busca, de palavras-chave **O(log n)**. Além disso, por usar uma estrutura de nós, solveu o problema de realocação da memória sequencial na primeira implementação. Por fim, implementamos uma nova função para retirar um elemento qualquer (no caso, a raiz), para a função de sugestão.
 
-### LISTA-SITE
+### `LISTA-SITE`
 
 Ainda na parte I, havíamos implementado uma lista encadeada de sites (com opção de ordenação), uma vez que o número de sites lidos era indefinido e, consequentemente, uma implementação não encadeada acarretaria em problemas de memória no que diz respeito às realocações proporcionalmente ao número de elementos.
 
@@ -52,13 +52,13 @@ Decidimos utilizar a mesma implementação com alterações (fixando a ordenaç�
 
 Vale ressaltar que, assim como na estrutura para o conjunto das palavras-chave, criamos uma função para adicionar os sites de uma lista em outra. Além disso, a remoção de apenas um único item não ocorre durante a execução, tornando a operação não relevante. Obtivemos, portanto, na estrutura, complexidades (nos piores casos) de busca e inserção de um item e remoção de todos os itens de **O(n)**.
 
-### AVL-SITE
+### `AVL-SITE`
 
 Como mencionado anteriormente, na primeira implementação foi utilizada uma lista encadeada para o conjunto geral de sites. No entanto, como são indefinidos os números de inserção e remoção e, principalmente, de buscas, além do fato de que cada código no conjunto é único, optou-se por utilizar uma árvore AVL para armazenar o conjunto de sites.
 
 Dessa forma, combinamos a eficiência obtida na busca de uma estrutura sequencial com a melhoria de memória advinda de encadeamentos, mesmo após indefinidas operações. Como complexidades, assim como na estrutura para o conjunto das palavras-chave, obtivemos, nos piores casos, **O(log n)**, tanto para inserção, busca e remoção de elementos.
 
-### PROMPT-USUARIO
+### `PROMPT-USUARIO`
 
 Por último, para *centralizar* o uso dos TADs criados, desenvolveu-se uma interface exclusiva como *meio-termo* entre os TADs e o usuário, sendo responsável pelas exibições. Poderia ter sido suprimida, mas, por escolha dos autores visando legibilidade e melhor compreensão do código desenvolvido, foi mantida.
 
