@@ -14,7 +14,7 @@ Para construção do programa, utilizou-se a linguagem C-99, com o compilador GC
 
 ### Funções do programa
 
-- **Inserir um site**: O usuário informa as informações de um site (código, nome, relevância, link e conjunto de palavras-chave). O código informado não pode ser igual a um site já inserido no conjunto e deve conter, no máximo, quatro dígitos (não negativo); a relevância deve ser um número **n* tal que **0 \leq n \leq 1000**; o conjunto de palavras-chave deve conter, no máximo, **10** elementos. Ao final, o programa apresenta o conjunto de sites atualizado.
+- **Inserir um site**: O usuário informa as informações de um site (código, nome, relevância, link e conjunto de palavras-chave). O código informado não pode ser igual a um site já inserido no conjunto e deve conter, no máximo, quatro dígitos (não negativo); a relevância deve ser um número n tal que n esteja entre 0 e mil; o conjunto de palavras-chave deve conter, no máximo, **10** elementos. Ao final, o programa apresenta o conjunto de sites atualizado.
 
 - **Remover um site**: O usuário informa o código de um site; caso o site esteja no conjunto de sites atual, executa a remoção. Ao final, o programa apresenta o conjunto de sites atualizado.
 
