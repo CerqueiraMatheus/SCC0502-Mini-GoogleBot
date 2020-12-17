@@ -42,7 +42,7 @@ A partir da interpretação da descrição do projeto, entendemos que seria nece
 
 Havíamos implementado, na parte I, um *array* ordenado para armazenar as palavras-chave, uma vez que a quantidade de elementos é limitada, com custos (nos piores casos) para inserção e remoção de **O(n)** e, para buscas, de **O(n)**. No entanto, dadas as novas operações, a limitação deixou de existir: para realizarmos a operação de sugestão, um número indefinido de palavras-chave deveria ser armazenado; além disso, tanto na operação de busca, quanto na de sugestão (em escala indefinidamente maior), são executadas buscas no conjunto de palavras-chave de um determinado site.
 
-Portanto, dadas as necessidades de inserção, busca e memória, além do fato de que, num conjunto de palavras-chave não há repetição, optou-se por usar um TAD AVL para o conjunto, mantendo a eficiência na busca quando comparada às demais árvores para o caso. Acrescentamos uma função para executar parte da operação de sugestão: a cópia das palavras-chave de uma lista a outra. Obtivemos, então, nos piores casos, para inserção, remoção e busca, de palavras-chave **O(n)**. Além disso, por usar uma estrutura de nós, solveu o problema de realocação da memória sequencial na primeira implementação. Por fim, implementamos uma nova função para retirar um elemento qualquer (no caso, a raiz), para a função de sugestão.
+Portanto, dadas as necessidades de inserção, busca e memória, além do fato de que, num conjunto de palavras-chave não há repetição, optou-se por usar um TAD AVL para o conjunto, mantendo a eficiência na busca quando comparada às demais árvores para o caso. Acrescentamos uma função para executar parte da operação de sugestão: a cópia das palavras-chave de uma lista a outra. Obtivemos, então, nos piores casos, para inserção, remoção e busca, de palavras-chave **O(log n)**. Além disso, por usar uma estrutura de nós, solveu o problema de realocação da memória sequencial na primeira implementação. Por fim, implementamos uma nova função para retirar um elemento qualquer (no caso, a raiz), para a função de sugestão.
 
 ### LISTA-SITE
 
@@ -56,7 +56,7 @@ Vale ressaltar que, assim como na estrutura para o conjunto das palavras-chave, 
 
 Como mencionado anteriormente, na primeira implementação foi utilizada uma lista encadeada para o conjunto geral de sites. No entanto, como são indefinidos os números de inserção e remoção e, principalmente, de buscas, além do fato de que cada código no conjunto é único, optou-se por utilizar uma árvore AVL para armazenar o conjunto de sites.
 
-Dessa forma, combinamos a eficiência obtida na busca de uma estrutura sequencial com a melhoria de memória advinda de encadeamentos, mesmo após indefinidas operações. Como complexidades, assim como na estrutura para o conjunto das palavras-chave, obtivemos, nos piores casos, **O(n)**, tanto para inserção, busca e remoção de elementos.
+Dessa forma, combinamos a eficiência obtida na busca de uma estrutura sequencial com a melhoria de memória advinda de encadeamentos, mesmo após indefinidas operações. Como complexidades, assim como na estrutura para o conjunto das palavras-chave, obtivemos, nos piores casos, **O(log n)**, tanto para inserção, busca e remoção de elementos.
 
 ### PROMPT-USUARIO
 
